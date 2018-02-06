@@ -15,4 +15,8 @@ class Game
 
 	private:
 		Player **players;
+
+		enum EPlayers { S, W };
+
+		void ReadDeck(std::string file, Player *player);
 };
