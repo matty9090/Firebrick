@@ -2,6 +2,8 @@
 
 #include <string>
 
+#include "Cards.hpp"
+
 class Player
 {
 	public:

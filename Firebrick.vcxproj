@@ -151,8 +151,12 @@
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Cards.hpp" />
+    <ClInclude Include="EquipCards.hpp" />
     <ClInclude Include="Game.hpp" />
+    <ClInclude Include="MinionCards.hpp" />
     <ClInclude Include="Player.hpp" />
+    <ClInclude Include="SpellCards.hpp" />
     <ClInclude Include="Util.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
