@@ -8,10 +8,10 @@
 
 class SwordEquip : public EquipmentCard {
 	public:
-		SwordEquip(int type) : EquipmentCard(10) {}
+		SwordEquip() : EquipmentCard(10) {}
 };
 
 class ArmourEquip : public EquipmentCard {
 	public:
-		ArmourEquip(int type) : EquipmentCard(11) {}
+		ArmourEquip() : EquipmentCard(11) {}
 };

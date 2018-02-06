@@ -1,6 +1,8 @@
 #pragma once
 
 #include <string>
+#include <set>
+#include <memory>
 
 #include "Util.hpp"
 #include "Player.hpp"
@@ -14,9 +16,10 @@ class Game
 		void Run();
 
 	private:
-		Player **players;
+		Player **m_Players;
 
 		enum EPlayers { S, W };
 
 		void ReadDeck(std::string file, Player *player);
+		CardPtr CreateCard(int type, std::vector<int> values);
 };

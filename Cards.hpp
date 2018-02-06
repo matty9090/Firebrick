@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 /*
 	General class card
 */
@@ -8,9 +10,13 @@ class Card {
 	public:
 		Card(int type) : m_CardType(type) {}
 
+		int GetType() { return m_CardType; }
+
 	protected:
 		int m_CardType;
 };
+
+typedef std::shared_ptr<Card> CardPtr;
 
 /*
 	The 3 types of card

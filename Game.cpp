@@ -13,16 +13,15 @@ using namespace std;
 */
 Game::Game(std::string wizFile, std::string sorFile)
 {
-	players = new Player*[2];
-
-	players[0] = new Player("Sorceress");
-	players[1] = new Player("Wizard");
+	m_Players	 = new Player*[2];
+	m_Players[0] = new Player("Sorceress");
+	m_Players[1] = new Player("Wizard");
 
 	try {
-		ReadDeck(wizFile, players[W]);
-		ReadDeck(sorFile, players[S]);
+		ReadDeck(wizFile, m_Players[W]);
+		ReadDeck(sorFile, m_Players[S]);
 	}
-	catch (exception e)
+	catch (exception &e)
 	{
 		cout << e.what() << endl;
 		exit(0);
@@ -44,7 +43,7 @@ void Game::Run()
 /*
 	Read the deck from a file
 */
-void Game::ReadDeck(string file, Player * player)
+void Game::ReadDeck(string file, Player *player)
 {
 	ifstream f(file);
 
@@ -58,7 +57,7 @@ void Game::ReadDeck(string file, Player * player)
 			string name;
 			int cardType;
 			vector<int> values;
-
+			
 			stream >> cardType >> name;
 
 			while (!stream.eof())
@@ -68,6 +67,8 @@ void Game::ReadDeck(string file, Player * player)
 				values.push_back(v);
 			}
 			
+			player->AddCardToDeck(CreateCard(cardType, values));
+
 			cout << "Read " << name << " (" << values.size() << " values)" << endl;
 		}
 	}
@@ -77,9 +78,31 @@ void Game::ReadDeck(string file, Player * player)
 	}
 }
 
+CardPtr Game::CreateCard(int type, vector<int> values)
+{
+	switch (type)
+	{
+		case 1:  return make_shared<BasicMinionCard>();
+		case 2:  return make_shared<FireballSpell>();
+		case 3:  return make_shared<LightningSpell>();
+		case 4:  return make_shared<BlessSpell>();
+		case 5:  return make_shared<VampireMinionCard>();
+		case 6:  return make_shared<WallMinionCard>();
+		case 7:  return make_shared<HordeMinionCard>();
+		case 8:  return make_shared<TrampleMinionCard>();
+		case 9:  return make_shared<LeechMinionCard>();
+		case 10: return make_shared<SwordEquip>();
+		case 11: return make_shared<ArmourEquip>();
+	}
+
+	throw exception("Invalid card type");
+
+	return nullptr;
+}
+
 /*
 	Free memory
 */
 Game::~Game() {
-	delete[] players;
+	delete[] m_Players;
 }

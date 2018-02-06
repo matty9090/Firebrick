@@ -8,15 +8,15 @@
 
 class FireballSpell : public SpellCard {
 	public:
-		FireballSpell(int type) : SpellCard(2) {}
+		FireballSpell() : SpellCard(2) {}
 };
 
 class LightningSpell : public SpellCard {
 	public:
-		LightningSpell(int type) : SpellCard(3) {}
+		LightningSpell() : SpellCard(3) {}
 };
 
 class BlessSpell : public SpellCard {
 	public:
-		BlessSpell(int type) : SpellCard(4) {}
+		BlessSpell() : SpellCard(4) {}
 };
