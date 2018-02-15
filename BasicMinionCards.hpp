@@ -7,59 +7,59 @@
 class OrcBasicMinion : public BasicMinionCard
 {
 	public:
-		OrcBasicMinion(std::string type) : BasicMinionCard(type) {}
+		OrcBasicMinion(std::string type, int att, int health) : BasicMinionCard(type, att, health) {}
 };
 
 class GoblinBasicMinion : public BasicMinionCard
 {
 	public:
-		GoblinBasicMinion(std::string type) : BasicMinionCard(type) {}
+		GoblinBasicMinion(std::string type, int att, int health) : BasicMinionCard(type, att, health) {}
 };
 
 class PookaBasicMinion : public BasicMinionCard
 {
 	public:
-		PookaBasicMinion(std::string type) : BasicMinionCard(type) {}
+		PookaBasicMinion(std::string type, int att, int health) : BasicMinionCard(type, att, health) {}
 };
 
 class ThornsBasicMinion : public BasicMinionCard
 {
 	public:
-		ThornsBasicMinion(std::string type) : BasicMinionCard(type) {}
+		ThornsBasicMinion(std::string type, int att, int health) : BasicMinionCard(type, att, health) {}
 };
 
 class GiantBasicMinion : public BasicMinionCard
 {
 	public:
-		GiantBasicMinion(std::string type) : BasicMinionCard(type) {}
+		GiantBasicMinion(std::string type, int att, int health) : BasicMinionCard(type, att, health) {}
 };
 
 class DwarfBasicMinion : public BasicMinionCard
 {
 	public:
-		DwarfBasicMinion(std::string type) : BasicMinionCard(type) {}
+		DwarfBasicMinion(std::string type, int att, int health) : BasicMinionCard(type, att, health) {}
 };
 
 class CannonBasicMinion : public BasicMinionCard
 {
 	public:
-		CannonBasicMinion(std::string type) : BasicMinionCard(type) {}
+		CannonBasicMinion(std::string type, int att, int health) : BasicMinionCard(type, att, health) {}
 };
 
 class SwordswingerBasicMinion : public BasicMinionCard
 {
 	public:
-		SwordswingerBasicMinion(std::string type) : BasicMinionCard(type) {}
+		SwordswingerBasicMinion(std::string type, int att, int health) : BasicMinionCard(type, att, health) {}
 };
 
 class SpearcarrierBasicMinion : public BasicMinionCard
 {
 	public:
-		SpearcarrierBasicMinion(std::string type) : BasicMinionCard(type) {}
+		SpearcarrierBasicMinion(std::string type, int att, int health) : BasicMinionCard(type, att, health) {}
 };
 
 class ElfBasicMinion : public BasicMinionCard
 {
 	public:
-		ElfBasicMinion(std::string type) : BasicMinionCard(type) {}
+		ElfBasicMinion(std::string type, int att, int health) : BasicMinionCard(type, att, health) {}
 };

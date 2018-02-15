@@ -4,14 +4,13 @@
 #include <fstream>
 #include <cassert>
 #include <sstream>
-#include <vector>
 
 using namespace std;
 
 /*
 	Initialise game data
 */
-Game::Game(std::string wizFile, std::string sorFile)
+Game::Game(std::string wizFile, std::string sorFile) : m_Round(1)
 {
 	m_Players	 = new Player*[2];
 	m_Players[0] = new Player("Sorceress");
@@ -35,18 +34,32 @@ Game::Game(std::string wizFile, std::string sorFile)
 */
 void Game::Run()
 {
-	m_Players[S]->DrawCard(), m_Players[W]->DrawCard();
-
-	cout << "Sorceress begins with " << m_Players[S]->PlayCard()->GetType() << "\n";
-	cout << "Wizard begins with "    << m_Players[W]->PlayCard()->GetType() << "\n";
+	cout << "Sorceress begins with " << m_Players[S]->DrawCard()->GetType() << "\n";
+	cout << "Wizard begins with "    << m_Players[W]->DrawCard()->GetType() << "\n";
 
 	while (true)
 	{
-		m_Players[S]->DrawCard(), m_Players[W]->DrawCard();
+		cout << "\nRound " << m_Round << "\n";
+
+		Play(S);
+		Play(W);
 
 		int num;
 		cin >> num;
+
+		m_Round++;
 	}
+}
+
+void Game::Play(EPlayers player) {
+	string playerStr = (player == S) ? "Sorceress" : "Wizard";
+
+	cout << playerStr << " draws " << m_Players[player]->DrawCard()->GetType() << "\n";
+	cout << playerStr << " plays " << m_Players[player]->PlayCard()->GetType() << "\n";
+
+	cout << "Cards on table: " << OutputHand(m_Players[player]->GetHand());
+
+	cout << "\n";
 }
 
 /*
@@ -89,34 +102,44 @@ void Game::ReadDeck(string file, Player *player)
 	}
 }
 
-CardPtr Game::CreateCard(int type, string name, vector<int> values)
+string Game::OutputHand(std::vector<CardPtr> hand)
+{
+	string str = "";
+
+	for (auto card : hand)
+		str += card->GetType() + card->GetHealthStr() + "\n";
+
+	return str;
+}
+
+CardPtr Game::CreateCard(int type, string name, vector<int> v)
 {
 	switch (type)
 	{
 		case 1:
 			switch (m_MinionCards[name]) {
-				case 0: return make_shared<OrcBasicMinion>(name);
-				case 1: return make_shared<GoblinBasicMinion>(name);
-				case 2: return make_shared<PookaBasicMinion>(name);
-				case 3: return make_shared<ThornsBasicMinion>(name);
-				case 4: return make_shared<GiantBasicMinion>(name);
-				case 5: return make_shared<DwarfBasicMinion>(name);
-				case 6: return make_shared<CannonBasicMinion>(name);
-				case 7: return make_shared<SwordswingerBasicMinion>(name);
-				case 8: return make_shared<SpearcarrierBasicMinion>(name);
-				case 9: return make_shared<ElfBasicMinion>(name);
+				case 0: return make_shared<OrcBasicMinion>          (name, v[0], v[1]);
+				case 1: return make_shared<GoblinBasicMinion>       (name, v[0], v[1]);
+				case 2: return make_shared<PookaBasicMinion>        (name, v[0], v[1]);
+				case 3: return make_shared<ThornsBasicMinion>       (name, v[0], v[1]);
+				case 4: return make_shared<GiantBasicMinion>        (name, v[0], v[1]);
+				case 5: return make_shared<DwarfBasicMinion>        (name, v[0], v[1]);
+				case 6: return make_shared<CannonBasicMinion>       (name, v[0], v[1]);
+				case 7: return make_shared<SwordswingerBasicMinion> (name, v[0], v[1]);
+				case 8: return make_shared<SpearcarrierBasicMinion> (name, v[0], v[1]);
+				case 9: return make_shared<ElfBasicMinion>          (name, v[0], v[1]);
 			}
 
-		case 2:  return make_shared<FireballSpell>(name);
-		case 3:  return make_shared<LightningSpell>(name);
-		case 4:  return make_shared<BlessSpell>(name);
-		case 5:  return make_shared<VampireMinionCard>(name);
-		case 6:  return make_shared<WallMinionCard>(name);
-		case 7:  return make_shared<HordeMinionCard>(name);
-		case 8:  return make_shared<TrampleMinionCard>(name);
-		case 9:  return make_shared<LeechMinionCard>(name);
-		case 10: return make_shared<SwordEquip>(name);
-		case 11: return make_shared<ArmourEquip>(name);
+		case 2:  return make_shared<FireballSpell>     (name, v[0]);
+		case 3:  return make_shared<LightningSpell>    (name, v[0]);
+		case 4:  return make_shared<BlessSpell>        (name, v[0], v[1]);
+		case 5:  return make_shared<VampireMinionCard> (name, v[0], v[1], v[2]);
+		case 6:  return make_shared<WallMinionCard>    (name, v[0], v[1]);
+		case 7:  return make_shared<HordeMinionCard>   (name, v[0], v[1], v[2]);
+		case 8:  return make_shared<TrampleMinionCard> (name, v[0], v[1]);
+		case 9:  return make_shared<LeechMinionCard>   (name, v[0], v[1], v[2]);
+		case 10: return make_shared<SwordEquip>        (name, v[0]);
+		case 11: return make_shared<ArmourEquip>       (name, v[0]);
 	}
 
 	throw exception("Invalid card type");

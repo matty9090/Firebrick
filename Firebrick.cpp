@@ -24,7 +24,7 @@ int main()
 		srand(seed);
 	}
 
-	cout << "Matthew Lowe - Firebrick\n\n\n";
+	cout << "Matthew Lowe - Firebrick\n\n";
 
 	Game firebrick(g_WizardDeck, g_SorceressDeck);
 	firebrick.Run();

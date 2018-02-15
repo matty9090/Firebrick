@@ -11,10 +11,13 @@ void Player::TakeDamage(int damage)
 	m_Health -= damage;
 }
 
-void Player::DrawCard()
+CardPtr Player::DrawCard()
 {
-	m_Hand.push_back(m_Deck.top());
+	CardPtr card = m_Deck.front();
+	m_Hand.push_back(card);
 	m_Deck.pop();
+
+	return card;
 }
 
 CardPtr Player::PlayCard()

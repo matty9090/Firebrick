@@ -2,7 +2,7 @@
 
 #include <string>
 #include <vector>
-#include <stack>
+#include <queue>
 
 #include "SpellCards.hpp"
 #include "EquipCards.hpp"
@@ -16,18 +16,22 @@ class Player
 		std::string GetName() { return m_Name; }
 
 		void AddCardToDeck(CardPtr card) { m_Deck.push(card); }
-		void DrawCard();
 		void TakeDamage(int damage);
 
-		int GetHealth() { return m_Health; }
-		std::stack<CardPtr> GetDeck() const { return m_Deck; }
+		CardPtr DrawCard();
 		CardPtr PlayCard();
+
+		int GetHealth() { return m_Health; }
+
+		std::queue<CardPtr>  GetDeck() const { return m_Deck; }
+		std::vector<CardPtr> GetHand() const { return m_Hand; }
 
 	private:
 		const int m_kMaxHealth = 30;
+		
 		int m_Health;
 
 		std::string m_Name;
-		std::stack<CardPtr> m_Deck;
+		std::queue<CardPtr> m_Deck;
 		std::vector<CardPtr> m_Hand;
 };
