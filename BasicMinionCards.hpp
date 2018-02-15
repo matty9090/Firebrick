@@ -7,59 +7,59 @@
 class OrcBasicMinion : public BasicMinionCard
 {
 	public:
-		OrcBasicMinion() : BasicMinionCard() {}
+		OrcBasicMinion(std::string type) : BasicMinionCard(type) {}
 };
 
 class GoblinBasicMinion : public BasicMinionCard
 {
 	public:
-		GoblinBasicMinion() : BasicMinionCard() {}
+		GoblinBasicMinion(std::string type) : BasicMinionCard(type) {}
 };
 
 class PookaBasicMinion : public BasicMinionCard
 {
 	public:
-		PookaBasicMinion() : BasicMinionCard() {}
+		PookaBasicMinion(std::string type) : BasicMinionCard(type) {}
 };
 
 class ThornsBasicMinion : public BasicMinionCard
 {
 	public:
-		ThornsBasicMinion() : BasicMinionCard() {}
+		ThornsBasicMinion(std::string type) : BasicMinionCard(type) {}
 };
 
 class GiantBasicMinion : public BasicMinionCard
 {
 	public:
-		GiantBasicMinion() : BasicMinionCard() {}
+		GiantBasicMinion(std::string type) : BasicMinionCard(type) {}
 };
 
 class DwarfBasicMinion : public BasicMinionCard
 {
 	public:
-		DwarfBasicMinion() : BasicMinionCard() {}
+		DwarfBasicMinion(std::string type) : BasicMinionCard(type) {}
 };
 
 class CannonBasicMinion : public BasicMinionCard
 {
 	public:
-		CannonBasicMinion() : BasicMinionCard() {}
+		CannonBasicMinion(std::string type) : BasicMinionCard(type) {}
 };
 
 class SwordswingerBasicMinion : public BasicMinionCard
 {
 	public:
-		SwordswingerBasicMinion() : BasicMinionCard() {}
+		SwordswingerBasicMinion(std::string type) : BasicMinionCard(type) {}
 };
 
 class SpearcarrierBasicMinion : public BasicMinionCard
 {
 	public:
-		SpearcarrierBasicMinion() : BasicMinionCard() {}
+		SpearcarrierBasicMinion(std::string type) : BasicMinionCard(type) {}
 };
 
 class ElfBasicMinion : public BasicMinionCard
 {
 	public:
-		ElfBasicMinion() : BasicMinionCard() {}
+		ElfBasicMinion(std::string type) : BasicMinionCard(type) {}
 };

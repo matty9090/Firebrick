@@ -9,35 +9,35 @@
 class BasicMinionCard : public MinionCard
 {
 	public:
-		BasicMinionCard() : MinionCard(1) {}
+		BasicMinionCard(std::string type) : MinionCard(type) {}
 };
 
 class VampireMinionCard : public MinionCard
 {
 	public:
-		VampireMinionCard() : MinionCard(5) {}
+		VampireMinionCard(std::string type) : MinionCard(type) {}
 };
 
 class WallMinionCard : public MinionCard
 {
 	public:
-		WallMinionCard() : MinionCard(6) {}
+		WallMinionCard(std::string type) : MinionCard(type) {}
 };
 
 class HordeMinionCard : public MinionCard
 {
 	public:
-		HordeMinionCard() : MinionCard(7) {}
+		HordeMinionCard(std::string type) : MinionCard(type) {}
 };
 
 class TrampleMinionCard : public MinionCard
 {
 	public:
-		TrampleMinionCard() : MinionCard(8) {}
+		TrampleMinionCard(std::string type) : MinionCard(type) {}
 };
 
 class LeechMinionCard : public MinionCard
 {
 	public:
-		LeechMinionCard() : MinionCard(9) {}
+		LeechMinionCard(std::string type) : MinionCard(type) {}
 };

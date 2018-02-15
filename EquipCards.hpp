@@ -9,11 +9,11 @@
 class SwordEquip : public EquipmentCard
 {
 	public:
-		SwordEquip() : EquipmentCard(10) {}
+		SwordEquip(std::string type) : EquipmentCard(type) {}
 };
 
 class ArmourEquip : public EquipmentCard
 {
 	public:
-		ArmourEquip() : EquipmentCard(11) {}
+		ArmourEquip(std::string type) : EquipmentCard(type) {}
 };

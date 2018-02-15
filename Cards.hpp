@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <string>
 
 /*
 	General class card
@@ -9,12 +10,12 @@
 class Card
 {
 	public:
-		Card(int type) : m_CardType(type) {}
+		Card(std::string type) : m_CardType(type) {}
 
-		int GetType() { return m_CardType; }
+		std::string GetType() { return m_CardType; }
 
 	protected:
-		int m_CardType;
+		std::string m_CardType;
 };
 
 // Create type for ease of use
@@ -27,17 +28,17 @@ typedef std::shared_ptr<Card> CardPtr;
 class MinionCard : public Card
 {
 	public:
-		MinionCard(int type) : Card(type) {}
+		MinionCard(std::string type) : Card(type) {}
 };
 
 class SpellCard : public Card
 {
 	public:
-		SpellCard(int type) : Card(type) {}
+		SpellCard(std::string type) : Card(type) {}
 };
 
 class EquipmentCard : public Card
 {
 	public:
-		EquipmentCard(int type) : Card(type) {}
+		EquipmentCard(std::string type) : Card(type) {}
 };
