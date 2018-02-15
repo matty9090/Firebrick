@@ -35,7 +35,7 @@ int main()
 /*
 	Generate a random number between 0 and n
 */
-int Random(const float n)
+int Random(const int n)
 {
 	return static_cast<int>(static_cast<double> (rand()) / (RAND_MAX + 1) * (n + 1));
 }

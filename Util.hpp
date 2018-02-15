@@ -2,4 +2,4 @@
 
 #include <cstdlib>
 
-int Random(const float n);
+int Random(const int n);

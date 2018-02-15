@@ -33,6 +33,11 @@ Game::Game(std::string wizFile, std::string sorFile)
 */
 void Game::Run()
 {
+	m_Players[S]->DrawCard(), m_Players[W]->DrawCard();
+
+	cout << "Sorceress begins with " << m_Players[S]->PlayCard() << "\n";
+	cout << "Wizard begins with "    << m_Players[W]->PlayCard() << "\n";
+
 	while (true)
 	{
 		int num;
@@ -69,7 +74,9 @@ void Game::ReadDeck(string file, Player *player)
 			
 			player->AddCardToDeck(CreateCard(cardType, values));
 
+#ifdef _DEBUG
 			cout << "Read " << name << " (" << values.size() << " values)" << endl;
+#endif // DEBUG
 		}
 	}
 	else
