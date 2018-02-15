@@ -6,7 +6,8 @@
 	General class card
 */
 
-class Card {
+class Card
+{
 	public:
 		Card(int type) : m_CardType(type) {}
 
@@ -16,23 +17,27 @@ class Card {
 		int m_CardType;
 };
 
+// Create type for ease of use
 typedef std::shared_ptr<Card> CardPtr;
 
 /*
 	The 3 types of card
 */
 
-class MinionCard : public Card {
+class MinionCard : public Card
+{
 	public:
 		MinionCard(int type) : Card(type) {}
 };
 
-class SpellCard : public Card {
+class SpellCard : public Card
+{
 	public:
 		SpellCard(int type) : Card(type) {}
 };
 
-class EquipmentCard : public Card {
+class EquipmentCard : public Card
+{
 	public:
 		EquipmentCard(int type) : Card(type) {}
 };

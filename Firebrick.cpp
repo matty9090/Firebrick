@@ -17,7 +17,8 @@ int main()
 	int seed;
 	ifstream seedFile(g_SeedFile);
 
-	if (seedFile.is_open()) {
+	if (seedFile.is_open())
+	{
 		seedFile >> seed;
 		seedFile.close();
 		srand(seed);
