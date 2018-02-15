@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include <set>
+#include <map>
 #include <memory>
 
 #include "Util.hpp"
@@ -19,7 +19,8 @@ class Game
 		Player **m_Players;
 
 		enum EPlayers { S, W };
+		std::map<std::string, int> m_MinionCards;
 
 		void ReadDeck(std::string file, Player *player);
-		CardPtr CreateCard(int type, std::vector<int> values);
+		CardPtr CreateCard(int type, std::string name, std::vector<int> values);
 };

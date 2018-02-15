@@ -4,9 +4,9 @@
 #include <vector>
 #include <stack>
 
-#include "MinionCards.hpp"
 #include "SpellCards.hpp"
 #include "EquipCards.hpp"
+#include "BasicMinionCards.hpp"
 
 class Player
 {

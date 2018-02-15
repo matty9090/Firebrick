@@ -9,17 +9,17 @@
 class FireballSpell : public SpellCard
 {
 	public:
-		FireballSpell() : SpellCard(2) {}
+		FireballSpell(std::string type) : SpellCard(type) {}
 };
 
 class LightningSpell : public SpellCard
 {
 	public:
-		LightningSpell() : SpellCard(3) {}
+		LightningSpell(std::string type) : SpellCard(type) {}
 };
 
 class BlessSpell : public SpellCard
 {
 	public:
-		BlessSpell() : SpellCard(4) {}
+		BlessSpell(std::string type) : SpellCard(type) {}
 };
