@@ -15,7 +15,7 @@ class Player
 
 		std::string GetName() { return m_Name; }
 
-		void AddCardToDeck(CardPtr card) { m_Deck.push(card); }
+		void AddCardToDeck(CardPtr card);
 		void TakeDamage(int damage);
 
 		CardPtr DrawCard();
@@ -25,6 +25,7 @@ class Player
 
 		std::queue<CardPtr>  GetDeck() const { return m_Deck; }
 		std::vector<CardPtr> GetHand() const { return m_Hand; }
+		std::vector<CardPtr> GetTable() const { return m_Table; }
 
 	private:
 		const int m_kMaxHealth = 30;
@@ -33,5 +34,5 @@ class Player
 
 		std::string m_Name;
 		std::queue<CardPtr> m_Deck;
-		std::vector<CardPtr> m_Hand;
+		std::vector<CardPtr> m_Hand, m_Table;
 };
