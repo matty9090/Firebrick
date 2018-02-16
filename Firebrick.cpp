@@ -37,5 +37,5 @@ int main()
 */
 int Random(const int n)
 {
-	return static_cast<int>(static_cast<double> (rand()) / (RAND_MAX + 1) * (n + 1));
+	return rand() % n;
 }
