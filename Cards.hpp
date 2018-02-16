@@ -12,8 +12,10 @@ class Card
 {
 	public:
 		Card(std::string type) : m_CardType(type) {}
-
+		 
+		virtual void Play() {}
 		virtual std::string GetHealthStr() = 0;
+
 		std::string GetType() { return m_CardType; }
 
 	protected:

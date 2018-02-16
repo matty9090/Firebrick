@@ -25,6 +25,6 @@ class Game
 
 		void Play(EPlayers player);
 		void ReadDeck(std::string file, Player *player);
-		std::string OutputHand(std::vector<CardPtr> hand);
+		std::string OutputTable(std::vector<CardPtr> table);
 		CardPtr CreateCard(int type, std::string name, std::vector<int> values);
 };
