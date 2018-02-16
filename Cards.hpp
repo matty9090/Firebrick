@@ -4,6 +4,12 @@
 #include <string>
 #include <sstream>
 
+class Card;
+class Player;
+
+// Create type for ease of use
+typedef std::shared_ptr<Card> CardPtr;
+
 /*
 	General class card
 */
@@ -13,17 +19,12 @@ class Card
 	public:
 		Card(std::string type) : m_CardType(type) {}
 		 
-		virtual void Play() {}
-		virtual std::string GetHealthStr() = 0;
-
+		virtual void Play(CardPtr card, Player *player) {}
 		std::string GetType() { return m_CardType; }
 
 	protected:
 		std::string m_CardType;
 };
-
-// Create type for ease of use
-typedef std::shared_ptr<Card> CardPtr;
 
 /*
 	The 3 types of card
@@ -40,6 +41,8 @@ class MinionCard : public Card
 			return str.str();
 		}
 
+		void Play(CardPtr card, Player *player) {}
+
 	protected:
 		int m_Attack, m_Health;
 };
@@ -48,14 +51,10 @@ class SpellCard : public Card
 {
 	public:
 		SpellCard(std::string type) : Card(type) {}
-
-		std::string GetHealthStr() { return ""; }
 };
 
 class EquipmentCard : public Card
 {
 	public:
 		EquipmentCard(std::string type) : Card(type) {}
-
-		std::string GetHealthStr() { return ""; }
 };

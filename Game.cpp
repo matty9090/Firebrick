@@ -56,16 +56,33 @@ void Game::Run()
 */
 void Game::Play(EPlayers player) {
 	string playerStr = (player == S) ? "Sorceress" : "Wizard";
+	EPlayers oPlayer = (player == S) ? W : S;
 
 	/* Draw and play cards */
+
 	cout << playerStr << " draws " << m_Players[player]->DrawCard()->GetType() << "\n";
 	
-	CardPtr card = m_Players[player]->PlayCard();
+	auto card = m_Players[player]->PlayCard();
 	cout << playerStr << " plays " << card->GetType() << "\n";
 
-	cout << "Cards on table: " << OutputTable(m_Players[player]->GetTable());
+	/* TODO: Activate spells */
 
-	/* TODO: Cards on table attack other players table */
+	auto cTable = m_Players[player]->GetTable();
+	auto oTable = m_Players[oPlayer]->GetTable();
+
+	cout << "Cards on table: " << OutputTable(cTable);
+
+	/* Cards on table attack other players table */
+
+	for (auto card : cTable)
+	{
+		CardPtr otherCard = nullptr;
+
+		if(oTable.size() > 0)
+			otherCard = oTable[Random(oTable.size())];
+
+		card->Play(otherCard, m_Players[oPlayer]);
+	}
 
 	cout << "\n";
 }
@@ -115,7 +132,10 @@ string Game::OutputTable(std::vector<CardPtr> table)
 	string str = "";
 
 	for (auto card : table)
-		str += card->GetType() + card->GetHealthStr() + "\n";
+	{
+		if(dynamic_pointer_cast<MinionCard>(card))
+			str += card->GetType() + dynamic_pointer_cast<MinionCard>(card)->GetHealthStr() + "\n";
+	}
 
 	return str;
 }
