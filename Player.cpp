@@ -1,14 +1,12 @@
 #include "Player.hpp"
 #include "Util.hpp"
+#include "Cards.hpp"
 
-Player::Player(std::string name) : m_Name(name), m_Health(m_kMaxHealth)
-{
-	
-}
+using namespace std;
 
-void Player::TakeDamage(int damage)
+Player::Player(std::string name, int maxHealth) : Living(name, maxHealth)
 {
-	m_Health -= damage;
+
 }
 
 void Player::AddCardToDeck(CardPtr card)
@@ -16,11 +14,27 @@ void Player::AddCardToDeck(CardPtr card)
 	m_Deck.push(card);
 }
 
+void Player::RemoveCardFromTable(CardPtr card)
+{
+	for (size_t i = 0; i < m_Table.size(); ++i)
+	{
+		if (card == m_Table[i])
+			m_Table.erase(m_Table.begin() + i);
+	}
+}
+
 CardPtr Player::DrawCard()
 {
-	CardPtr card = m_Deck.front();
-	m_Hand.push_back(card);
-	m_Deck.pop();
+	CardPtr card;
+
+	if (m_Deck.size() > 0)
+	{
+		card = m_Deck.front();
+		m_Hand.push_back(card);
+		m_Deck.pop();
+	}
+	else
+		return nullptr;
 
 	return card;
 }

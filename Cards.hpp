@@ -2,10 +2,12 @@
 
 #include <memory>
 #include <string>
+#include <iostream>
 #include <sstream>
 
+#include "Player.hpp"
+
 class Card;
-class Player;
 
 // Create type for ease of use
 typedef std::shared_ptr<Card> CardPtr;
@@ -19,7 +21,7 @@ class Card
 	public:
 		Card(std::string type) : m_CardType(type) {}
 		 
-		virtual void Play(CardPtr card, Player *player) {}
+		virtual std::string Play(CardPtr card, std::shared_ptr<Player> player) { return ""; } // TODO: Make pure
 		std::string GetType() { return m_CardType; }
 
 	protected:
@@ -30,21 +32,50 @@ class Card
 	The 3 types of card
 */
 
-class MinionCard : public Card
+class MinionCard : public Card, public Living
 {
 	public:
-		MinionCard(std::string type, int att, int health) : Card(type), m_Attack(att), m_Health(health) {}
+		MinionCard(std::string type, int att, int health) : Card(type), Living(type, health), m_Attack(att) {}
 
-		std::string GetHealthStr() {
-			std::ostringstream str;
-			str << "(" << m_Health << ")";
-			return str.str();
+		void TakeDamage(int damage) { m_Health -= damage; }
+
+		std::string Play(CardPtr card, std::shared_ptr<Player> player)
+		{
+			std::ostringstream out;
+
+			if (m_Attack > 0)
+			{
+				std::shared_ptr<Living> c;
+
+				if (card == nullptr)
+					c = std::dynamic_pointer_cast<Living>(player);
+				else if (!std::dynamic_pointer_cast<Living>(card))
+					return "";
+				else
+					c = std::dynamic_pointer_cast<Living>(card);
+
+				c->TakeDamage(m_Attack);
+
+				out << GetType() << " attacks " << c->GetName() << ": " << c->GetName();
+
+				if (c->GetHealth() <= 0)
+				{
+					out << " is killed";
+
+					if(card != nullptr) 
+						player->RemoveCardFromTable(card);
+				}
+				else
+					out << " health now " << c->GetHealth();
+
+				out << "\n";
+			}
+
+			return out.str();
 		}
 
-		void Play(CardPtr card, Player *player) {}
-
 	protected:
-		int m_Attack, m_Health;
+		int m_Attack;
 };
 
 class SpellCard : public Card

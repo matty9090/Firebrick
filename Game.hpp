@@ -18,13 +18,16 @@ class Game
 
 	private:
 		int m_Round;
-		Player **m_Players;
+		bool ended;
+		const int m_kMaxHealth = 30;
+
+		std::shared_ptr<Player> *m_Players;
 
 		enum EPlayers { S, W };
 		std::map<std::string, int> m_MinionCards;
 
 		void Play(EPlayers player);
-		void ReadDeck(std::string file, Player *player);
+		void ReadDeck(std::string file, std::shared_ptr<Player> player);
 		std::string OutputTable(std::vector<CardPtr> table);
 		CardPtr CreateCard(int type, std::string name, std::vector<int> values);
 };
