@@ -91,24 +91,20 @@ void Game::Play(EPlayers player) {
 	auto card = m_Players[player]->PlayCard();
 	cout << playerStr << " plays " << card->GetType() << "\n";
 
-	/* TODO: Activate spells */
-
 	auto cTable = m_Players[player]->GetTable();
 	auto oTable = m_Players[oPlayer]->GetTable();
 
-	cout << "Cards on table: " << OutputTable(cTable);
-
-	/* Cards on table attack other players table */
+	/* Activate spells */
 
 	for (auto card : cTable)
-	{
-		CardPtr otherCard = nullptr;
+		cout << card->OnActivate(m_Players[player], m_Players[oPlayer]);
 
-		if(oTable.size() > 0)
-			otherCard = oTable[Random(oTable.size())];
+	cout << "Cards on table: " << OutputTable(cTable);
 
-		cout << card->Play(otherCard, m_Players[oPlayer]);
-	}
+	/* Minions on table attack other players minions */
+
+	for (auto card : cTable)
+		cout << card->OnPlay(m_Players[player], m_Players[oPlayer]);
 
 	cout << "\n";
 
