@@ -66,6 +66,9 @@ void Game::Run()
 		}
 
 		m_Round++;
+
+		if (m_Round > 30)
+			cout << "Game ended\n";
 	}
 
 	int n;
