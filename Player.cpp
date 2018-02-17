@@ -25,7 +25,7 @@ void Player::RemoveCardFromTable(CardPtr card)
 
 CardPtr Player::DrawCard()
 {
-	CardPtr card;
+	CardPtr card = nullptr;
 
 	if (m_Deck.size() > 0)
 	{
@@ -33,8 +33,6 @@ CardPtr Player::DrawCard()
 		m_Hand.push_back(card);
 		m_Deck.pop();
 	}
-	else
-		return nullptr;
 
 	return card;
 }

@@ -31,7 +31,8 @@ Game::Game(std::string wizFile, std::string sorFile) : m_Round(1), ended(false)
 	m_MinionCards["Spearcarrier"] = 8;
 	m_MinionCards["Elf"]          = 9;
 
-	try {
+	try
+	{
 		ReadDeck(wizFile, m_Players[W]);
 		ReadDeck(sorFile, m_Players[S]);
 	}
@@ -50,24 +51,16 @@ void Game::Run()
 	cout << "Sorceress begins with " << m_Players[S]->DrawCard()->GetType() << "\n";
 	cout << "Wizard begins with "    << m_Players[W]->DrawCard()->GetType() << "\n";
 
-	while (!ended && m_Round <= 30)
+	while (!ended && m_Round <= m_kMaxRounds)
 	{
 		cout << "\nRound " << m_Round << "\n";
 
 		Play(S);
 		if(!ended) Play(W);
 
-		if (m_Players[S]->GetHealth() < 0 || m_Players[W]->GetHealth() < 0)
-		{
-			ended = true;
-			cout << (m_Players[S]->GetHealth() < 0) ? "Sorceress was killed\n" : "Wizard was killed\n";
-
-			break;
-		}
-
 		m_Round++;
 
-		if (m_Round > 30)
+		if (m_Round > m_kMaxRounds)
 			cout << "Game ended\n";
 	}
 
@@ -97,21 +90,31 @@ void Game::Play(EPlayers player) {
 	/* Activate spells */
 
 	for (auto card : cTable)
-		cout << card->OnActivate(m_Players[player], m_Players[oPlayer]);
+		cout << card->OnActivate(card, m_Players[player], m_Players[oPlayer]);
 
 	cout << "Cards on table: " << OutputTable(cTable);
 
 	/* Minions on table attack other players minions */
 
 	for (auto card : cTable)
-		cout << card->OnPlay(m_Players[player], m_Players[oPlayer]);
+		cout << card->OnPlay(card, m_Players[player], m_Players[oPlayer]);
 
 	cout << "\n";
+
+	/* Checks for end game */
 
 	if (m_Players[player]->GetDeck().empty())
 	{
 		ended = true;
 		cout << "Game has ended, no more cards on the deck\n";
+		return;
+	}
+
+	if (m_Players[S]->GetHealth() < 0 || m_Players[W]->GetHealth() < 0)
+	{
+		ended = true;
+		cout << (m_Players[S]->GetHealth() < 0) ? "Sorceress was killed\n" : "Wizard was killed\n";
+		return;
 	}
 }
 

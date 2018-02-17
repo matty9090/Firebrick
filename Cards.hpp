@@ -21,8 +21,8 @@ class Card
 	public:
 		Card(std::string type) : m_CardType(type) {}
 		 
-		virtual std::string OnPlay(std::shared_ptr<Player> self, std::shared_ptr<Player> opp) { return ""; } // TODO: Make pure
-		virtual std::string OnActivate(std::shared_ptr<Player> self, std::shared_ptr<Player> opp) { return ""; }
+		virtual std::string OnPlay(CardPtr card, std::shared_ptr<Player> self, std::shared_ptr<Player> opp) { return ""; } // TODO: Make pure
+		virtual std::string OnActivate(CardPtr card, std::shared_ptr<Player> self, std::shared_ptr<Player> opp) { return ""; }
 
 		std::string GetType() { return m_CardType; }
 
@@ -41,15 +41,16 @@ class MinionCard : public Card, public Living
 
 		void TakeDamage(int damage) { m_Health -= damage; }
 
-		std::string OnPlay(std::shared_ptr<Player> self, std::shared_ptr<Player> opp)
+		std::string OnPlay(CardPtr curCard, std::shared_ptr<Player> self, std::shared_ptr<Player> opp)
 		{
 			std::ostringstream out;
 
 			CardPtr card = nullptr;
 
-			if (opp->GetTable().size() > 0 && m_Attack > 0) {
+			if(opp->GetTable().size() > 0)
 				card = opp->GetTable()[Random(opp->GetTable().size())];
 
+			if (m_Attack > 0) {
 				std::shared_ptr<Living> c;
 
 				if (card == nullptr)
@@ -88,8 +89,8 @@ class SpellCard : public Card
 	public:
 		SpellCard(std::string type) : Card(type) {}
 
-		std::string OnActivate(std::shared_ptr<Player> self, std::shared_ptr<Player> opp) {
-			// TODO
+		std::string OnActivate(CardPtr card, std::shared_ptr<Player> self, std::shared_ptr<Player> opp) {
+			self->RemoveCardFromTable(card);
 			
 			return "";
 		}

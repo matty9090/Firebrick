@@ -19,6 +19,8 @@ class Game
 	private:
 		int m_Round;
 		bool ended;
+
+		const int m_kMaxRounds = 10;
 		const int m_kMaxHealth = 30;
 
 		std::shared_ptr<Player> *m_Players;
