@@ -87,13 +87,16 @@ class MinionCard : public Card, public Living
 class SpellCard : public Card
 {
 	public:
-		SpellCard(std::string type) : Card(type) {}
+		SpellCard(std::string type, int att) : Card(type), m_Attack(att) {}
 
-		std::string OnActivate(CardPtr card, std::shared_ptr<Player> self, std::shared_ptr<Player> opp) {
+		virtual std::string OnActivate(CardPtr card, std::shared_ptr<Player> self, std::shared_ptr<Player> opp) {
 			self->RemoveCardFromTable(card);
 			
 			return "";
 		}
+
+	protected:
+		int m_Attack;
 };
 
 class EquipmentCard : public Card
