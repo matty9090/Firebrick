@@ -50,8 +50,5 @@
     <ClInclude Include="EquipCards.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BasicMinionCards.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

@@ -20,17 +20,6 @@ Game::Game(std::string wizFile, std::string sorFile) : m_Round(1), ended(false)
 	m_Players[0] = make_shared<Player>("Sorceress", m_kMaxHealth);
 	m_Players[1] = make_shared<Player>("Wizard", m_kMaxHealth);
 
-	m_MinionCards["Orc"]          = 0;
-	m_MinionCards["Goblin"]       = 1;
-	m_MinionCards["Pooka"]        = 2;
-	m_MinionCards["Thorns"]       = 3;
-	m_MinionCards["Giant"]        = 4;
-	m_MinionCards["Dwarf"]        = 5;
-	m_MinionCards["Cannon"]       = 6;
-	m_MinionCards["Swordswinger"] = 7;
-	m_MinionCards["Spearcarrier"] = 8;
-	m_MinionCards["Elf"]          = 9;
-
 	try
 	{
 		ReadDeck(wizFile, m_Players[W]);
@@ -177,20 +166,7 @@ CardPtr Game::CreateCard(int type, string name, vector<int> v)
 {
 	switch (type)
 	{
-		case 1:
-			switch (m_MinionCards[name]) {
-				case 0: return make_shared<OrcBasicMinion>          (name, v[0], v[1]);
-				case 1: return make_shared<GoblinBasicMinion>       (name, v[0], v[1]);
-				case 2: return make_shared<PookaBasicMinion>        (name, v[0], v[1]);
-				case 3: return make_shared<ThornsBasicMinion>       (name, v[0], v[1]);
-				case 4: return make_shared<GiantBasicMinion>        (name, v[0], v[1]);
-				case 5: return make_shared<DwarfBasicMinion>        (name, v[0], v[1]);
-				case 6: return make_shared<CannonBasicMinion>       (name, v[0], v[1]);
-				case 7: return make_shared<SwordswingerBasicMinion> (name, v[0], v[1]);
-				case 8: return make_shared<SpearcarrierBasicMinion> (name, v[0], v[1]);
-				case 9: return make_shared<ElfBasicMinion>          (name, v[0], v[1]);
-			}
-
+		case 1:  return make_shared<BasicMinionCard>   (name, v[0], v[1]);
 		case 2:  return make_shared<FireballSpell>     (name, v[0]);
 		case 3:  return make_shared<LightningSpell>    (name, v[0]);
 		case 4:  return make_shared<BlessSpell>        (name, v[0], v[1]);
