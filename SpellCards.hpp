@@ -11,7 +11,8 @@ class FireballSpell : public SpellCard
 	public:
 		FireballSpell(std::string type, int att) : SpellCard(type, att) {}
 
-		virtual std::string OnActivate(CardPtr card, std::shared_ptr<Player> self, std::shared_ptr<Player> opp) {
+		virtual std::string OnActivate(CardPtr card, std::shared_ptr<Player> self, std::shared_ptr<Player> opp)
+		{
 			std::ostringstream out;
 			SpellCard::OnActivate(card, self, opp);
 
@@ -23,16 +24,9 @@ class FireballSpell : public SpellCard
 
 			if (targets.size() > 0)
 			{
-				std::shared_ptr<Living> target = targets[Random(targets.size())];
-				target->TakeDamage(m_Attack);
-				out << GetType() << " attacks " << target->GetName() << ": " << target->GetName();
-
-				if(target->GetHealth() <= 0)
-					out << " is killed";
-				else
-					out << " health now " << target->GetHealth();
-
-				out << "\n";
+				int rand = Random(targets.size());
+				CardPtr oppCard = (rand == targets.size() - 1) ? nullptr : opp->GetTable()[rand];
+				out << Attack(card, targets[rand], opp, m_Attack, oppCard);
 			}
 
 			return out.str();
@@ -43,6 +37,19 @@ class LightningSpell : public SpellCard
 {
 	public:
 		LightningSpell(std::string type, int att) : SpellCard(type, att) {}
+
+		virtual std::string OnActivate(CardPtr card, std::shared_ptr<Player> self, std::shared_ptr<Player> opp)
+		{
+			std::ostringstream out;
+			SpellCard::OnActivate(card, self, opp);
+
+			for (auto c : opp->GetTable())
+				out << Attack(card, std::dynamic_pointer_cast<Living>(c), opp, m_Attack, c);
+
+			out << Attack(card, std::dynamic_pointer_cast<Living>(opp), opp, m_Attack, nullptr);
+
+			return out.str();
+		}
 };
 
 class BlessSpell : public SpellCard
