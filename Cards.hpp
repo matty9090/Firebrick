@@ -8,6 +8,7 @@
 #include "Player.hpp"
 
 class Card;
+class MinionCard;
 
 // Create type for ease of use
 typedef std::shared_ptr<Card> CardPtr;
@@ -28,6 +29,28 @@ class Card
 
 	protected:
 		std::string m_CardType;
+		
+		std::string Attack(CardPtr att, std::shared_ptr<Living> opp, std::shared_ptr<Player> player, int damage, CardPtr remove = nullptr)
+		{
+			std::ostringstream out;
+
+			opp->TakeDamage(damage);
+			out << att->GetType() << " attacks " << opp->GetName() << ": " << opp->GetName();
+
+			if (opp->GetHealth() <= 0)
+			{
+				out << " is killed";
+
+				if (remove != nullptr)
+					player->RemoveCardFromTable(remove);
+			}
+			else
+				out << " health now " << opp->GetHealth();
+
+			out << "\n";
+
+			return out.str();
+		}
 };
 
 /*
@@ -60,21 +83,7 @@ class MinionCard : public Card, public Living
 				else
 					c = std::dynamic_pointer_cast<Living>(card);
 
-				c->TakeDamage(m_Attack);
-
-				out << GetType() << " attacks " << c->GetName() << ": " << c->GetName();
-
-				if (c->GetHealth() <= 0)
-				{
-					out << " is killed";
-
-					if (card != nullptr)
-						opp->RemoveCardFromTable(card);
-				}
-				else
-					out << " health now " << c->GetHealth();
-
-				out << "\n";
+				out << Attack(curCard, c, opp, m_Attack, card);
 			}
 
 			return out.str();
@@ -89,7 +98,8 @@ class SpellCard : public Card
 	public:
 		SpellCard(std::string type, int att) : Card(type), m_Attack(att) {}
 
-		virtual std::string OnActivate(CardPtr card, std::shared_ptr<Player> self, std::shared_ptr<Player> opp) {
+		virtual std::string OnActivate(CardPtr card, std::shared_ptr<Player> self, std::shared_ptr<Player> opp)
+		{
 			self->RemoveCardFromTable(card);
 			
 			return "";
@@ -103,4 +113,11 @@ class EquipmentCard : public Card
 {
 	public:
 		EquipmentCard(std::string type) : Card(type) {}
+
+		virtual std::string OnActivate(CardPtr card, std::shared_ptr<Player> self, std::shared_ptr<Player> opp)
+		{
+			self->RemoveCardFromTable(card);
+
+			return "";
+		}
 };

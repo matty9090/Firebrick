@@ -151,11 +151,16 @@ string Game::OutputTable(std::vector<CardPtr> table)
 {
 	ostringstream str;
 
-	for (auto card : table)
+	if (table.size() > 0)
 	{
-		if(dynamic_pointer_cast<MinionCard>(card))
-			str << card->GetType() << "(" << dynamic_pointer_cast<MinionCard>(card)->GetHealth() << ") ";
+		for (auto card : table)
+		{
+			if (dynamic_pointer_cast<MinionCard>(card))
+				str << card->GetType() << "(" << dynamic_pointer_cast<MinionCard>(card)->GetHealth() << ") ";
+		}
 	}
+	else
+		str << "None";
 
 	str << "\n";
 
