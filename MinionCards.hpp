@@ -31,6 +31,7 @@ class VampireMinionCard : public MinionCard
 		int m_Heal;
 };
 
+/* Unused? */
 class WallMinionCard : public MinionCard
 {
 	public:
@@ -40,7 +41,24 @@ class WallMinionCard : public MinionCard
 class HordeMinionCard : public MinionCard
 {
 	public:
-		HordeMinionCard(std::string type, int att, int health, int attIncrement) : MinionCard(type, att, health) {}
+		HordeMinionCard(std::string type, int att, int health, int attIncrement) : MinionCard(type, att, health), m_InitialAtt(att), m_AttIncrement(attIncrement) {}
+
+		std::string OnPlay(CardPtr card, std::shared_ptr<Player> self, std::shared_ptr<Player> opp)
+		{
+			int extra = 0;
+
+			for (auto c : self->GetTable())
+				if (c->GetType() == GetType() && c != card)
+					extra += m_AttIncrement;
+
+			m_Attack = m_InitialAtt + extra;
+
+			return MinionCard::OnPlay(card, self, opp);
+		}
+
+	private:
+		int m_AttIncrement;
+		int m_InitialAtt;
 };
 
 class TrampleMinionCard : public MinionCard
