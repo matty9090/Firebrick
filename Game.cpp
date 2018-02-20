@@ -71,21 +71,20 @@ void Game::Play(EPlayers player) {
 	cout << playerStr << " draws " << drawn->GetType() << "\n";
 	
 	auto card = m_Players[player]->PlayCard();
+	
 	cout << playerStr << " plays " << card->GetType() << "\n";
-
-	auto cTable = m_Players[player]->GetTable();
-	auto oTable = m_Players[oPlayer]->GetTable();
 
 	/* Activate spells */
 
-	for (auto card : cTable)
+	for (auto card : m_Players[player]->GetTable())
 		cout << card->OnActivate(card, m_Players[player], m_Players[oPlayer]);
 
-	cout << "Cards on table: " << OutputTable(cTable);
+
+	cout << "Cards on table: " << OutputTable(m_Players[player]->GetTable());
 
 	/* Minions on table attack other players minions */
 
-	for (auto card : cTable)
+	for (auto card : m_Players[player]->GetTable())
 		cout << card->OnPlay(card, m_Players[player], m_Players[oPlayer]);
 
 	cout << "\n";
