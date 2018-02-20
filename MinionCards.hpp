@@ -20,8 +20,10 @@ class VampireMinionCard : public MinionCard
 		std::string OnPlay(CardPtr card, std::shared_ptr<Player> self, std::shared_ptr<Player> opp)
 		{
 			std::ostringstream out;
+			std::string res = MinionCard::OnPlay(card, self, opp);
+			out << res;
 			
-			if (MinionCard::OnPlay(card, self, opp) != "")
+			if (res != "")
 				m_Health += m_Heal;
 
 			return out.str();
@@ -88,5 +90,20 @@ class TrampleMinionCard : public MinionCard
 class LeechMinionCard : public MinionCard
 {
 	public:
-		LeechMinionCard(std::string type, int att, int health, int heal) : MinionCard(type, att, health) {}
+		LeechMinionCard(std::string type, int att, int health, int heal) : MinionCard(type, att, health), m_Heal(heal) {}
+
+		std::string OnPlay(CardPtr card, std::shared_ptr<Player> self, std::shared_ptr<Player> opp)
+		{
+			std::ostringstream out;
+			std::string res = MinionCard::OnPlay(card, self, opp);
+			out << res;
+
+			if (res != "")
+				self->TakeDamage(-m_Heal);
+
+			return out.str();
+		}
+
+	protected:
+		int m_Heal;
 };
