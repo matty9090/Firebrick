@@ -15,7 +15,20 @@ class BasicMinionCard : public MinionCard
 class VampireMinionCard : public MinionCard
 {
 	public:
-		VampireMinionCard(std::string type, int att, int health, int heal) : MinionCard(type, att, health) {}
+		VampireMinionCard(std::string type, int att, int health, int heal) : MinionCard(type, att, health), m_Heal(heal) {}
+
+		std::string OnPlay(CardPtr card, std::shared_ptr<Player> self, std::shared_ptr<Player> opp)
+		{
+			std::ostringstream out;
+			
+			if (MinionCard::OnPlay(card, self, opp) != "")
+				m_Health += m_Heal;
+
+			return out.str();
+		}
+
+	private:
+		int m_Heal;
 };
 
 class WallMinionCard : public MinionCard
