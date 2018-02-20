@@ -38,6 +38,9 @@ class Card
 			m_Excess = damage - opp->GetHealth();
 			opp->TakeDamage(damage);
 
+			if (opp->GetHealth() < 0)
+				m_Excess = 0;
+
 			out << att->GetType() << " attacks " << opp->GetName() << ": " << opp->GetName();
 
 			if (opp->GetHealth() <= 0)
@@ -75,6 +78,7 @@ class MinionCard : public Card, public Living
 	public:
 		MinionCard(std::string type, int att, int health) : Card(type), Living(type, health), m_Attack(att) {}
 
+		void IncreaseAttack(int att) { m_Attack += att; }
 		void TakeDamage(int damage) { m_Health -= damage; }
 
 		std::string OnPlay(CardPtr curCard, std::shared_ptr<Player> self, std::shared_ptr<Player> opp)

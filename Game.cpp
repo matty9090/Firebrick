@@ -79,7 +79,6 @@ void Game::Play(EPlayers player) {
 	for (auto card : m_Players[player]->GetTable())
 		cout << card->OnActivate(card, m_Players[player], m_Players[oPlayer]);
 
-
 	cout << "Cards on table: " << OutputTable(m_Players[player]->GetTable());
 
 	/* Minions on table attack other players minions */
