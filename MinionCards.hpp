@@ -47,7 +47,7 @@ class HordeMinionCard : public MinionCard
 		{
 			int extra = 0;
 
-			for (auto c : self->GetTable())
+			for (CardPtr c : self->GetTable())
 				if (c->GetType() == GetType() && c != card)
 					extra += m_AttIncrement;
 
@@ -64,7 +64,25 @@ class HordeMinionCard : public MinionCard
 class TrampleMinionCard : public MinionCard
 {
 	public:
-		TrampleMinionCard(std::string type, int att, int health) : MinionCard(type, att, health) {}
+		TrampleMinionCard(std::string type, int att, int health) : MinionCard(type, att, health), m_InitialAtt(att) {}
+
+		std::string OnPlay(CardPtr card, std::shared_ptr<Player> self, std::shared_ptr<Player> opp)
+		{
+			std::ostringstream out;
+			m_Attack = m_InitialAtt;
+
+			do
+			{
+				out << MinionCard::OnPlay(card, self, opp);
+				m_Attack = m_Excess;
+			}
+			while (m_Excess > 0);
+
+			return out.str();
+		}
+
+	private:
+		int m_InitialAtt;
 };
 
 class LeechMinionCard : public MinionCard

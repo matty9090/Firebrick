@@ -177,7 +177,7 @@ CardPtr Game::CreateCard(int type, string name, vector<int> v)
 		case 4:  return make_shared<BlessSpell>        (name, v[0], v[1]);
 		case 5:  return make_shared<VampireMinionCard> (name, v[0], v[1], v[2]);
 		case 6:  return make_shared<WallMinionCard>    (name, v[0], v[1]);
-		case 7:  return make_shared<HordeMinionCard>   (name,    1, v[0], v[1]);
+		case 7:  return make_shared<HordeMinionCard>   (name, v[0], v[1],    1);
 		case 8:  return make_shared<TrampleMinionCard> (name, v[0], v[1]);
 		case 9:  return make_shared<LeechMinionCard>   (name, v[0], v[1],    2);
 		case 10: return make_shared<SwordEquip>        (name, v[0]);

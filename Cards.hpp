@@ -29,12 +29,15 @@ class Card
 
 	protected:
 		std::string m_CardType;
+		int m_Excess;
 		
 		std::string Attack(CardPtr att, std::shared_ptr<Living> opp, std::shared_ptr<Player> player, int damage, CardPtr remove = nullptr)
 		{
 			std::ostringstream out;
 
+			m_Excess = damage - opp->GetHealth();
 			opp->TakeDamage(damage);
+
 			out << att->GetType() << " attacks " << opp->GetName() << ": " << opp->GetName();
 
 			if (opp->GetHealth() <= 0)
