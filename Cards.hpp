@@ -35,6 +35,8 @@ class Card
 		{
 			std::ostringstream out;
 
+			damage -= opp->GetProtection();
+
 			m_Excess = damage - opp->GetHealth();
 			opp->TakeDamage(damage);
 
