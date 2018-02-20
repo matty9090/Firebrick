@@ -1,7 +1,7 @@
 #include "Game.hpp"
-#include "BasicMinionCards.hpp"
 #include "EquipCards.hpp"
 #include "SpellCards.hpp"
+#include "MinionCards.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -102,7 +102,7 @@ void Game::Play(EPlayers player) {
 	if (m_Players[S]->GetHealth() < 0 || m_Players[W]->GetHealth() < 0)
 	{
 		ended = true;
-		cout << (m_Players[S]->GetHealth() < 0) ? "Sorceress was killed\n" : "Wizard was killed\n";
+		cout << ((m_Players[S]->GetHealth() < 0) ? "Sorceress was killed\n" : "Wizard was killed\n");
 		return;
 	}
 }

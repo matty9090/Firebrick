@@ -17,10 +17,11 @@ class FireballSpell : public SpellCard
 			SpellCard::OnActivate(card, self, opp);
 
 			std::vector<std::shared_ptr<Living>> targets;
-			targets.push_back(std::dynamic_pointer_cast<Living>(opp));
 
 			for (auto tblCard : opp->GetTable())
 				targets.push_back(std::dynamic_pointer_cast<Living>(tblCard));
+
+			targets.push_back(std::dynamic_pointer_cast<Living>(opp));
 
 			if (targets.size() > 0)
 			{
@@ -55,5 +56,40 @@ class LightningSpell : public SpellCard
 class BlessSpell : public SpellCard
 {
 	public:
-		BlessSpell(std::string type, int att, int heal) : SpellCard(type, att) {}
+		BlessSpell(std::string type, int att, int heal) : SpellCard(type, att, heal) {}
+
+		virtual std::string OnActivate(CardPtr card, std::shared_ptr<Player> self, std::shared_ptr<Player> opp)
+		{
+			std::ostringstream out;
+			SpellCard::OnActivate(card, self, opp);
+
+			std::vector<std::shared_ptr<Living>> targets;
+
+			// Enemy minions, enemy player, friendly minions, friendly player
+			for (auto minions : opp->GetTable())  targets.push_back(std::dynamic_pointer_cast<Living>(minions));
+			targets.push_back(std::dynamic_pointer_cast<Living>(opp));
+			for (auto minions : self->GetTable()) targets.push_back(std::dynamic_pointer_cast<Living>(minions));
+			targets.push_back(std::dynamic_pointer_cast<Living>(self));
+
+			if (targets.size() > 0)
+			{
+				int rand = Random(targets.size());
+				CardPtr c = nullptr;
+
+				if (std::dynamic_pointer_cast<Player>(targets[rand]) == self)
+				{
+					CardPtr isPlayer = std::dynamic_pointer_cast<Card>(targets[rand]);
+					c = (isPlayer) ? nullptr : isPlayer;
+					out << Attack(card, targets[rand], opp, m_Attack, c);
+				}
+				else
+				{
+					CardPtr isPlayer = std::dynamic_pointer_cast<Card>(targets[rand]);
+					c = (isPlayer) ? nullptr : isPlayer;
+					out << Heal(card, targets[rand], opp, m_Heal, c);
+				}
+			}
+
+			return out.str();
+		}
 };

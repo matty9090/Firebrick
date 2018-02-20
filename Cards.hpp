@@ -51,6 +51,16 @@ class Card
 
 			return out.str();
 		}
+
+		std::string Heal(CardPtr att, std::shared_ptr<Living> opp, std::shared_ptr<Player> player, int heal, CardPtr remove = nullptr)
+		{
+			std::ostringstream out;
+
+			opp->TakeDamage(-heal);
+			out << att->GetType() << " heals " << opp->GetName() << ": " << opp->GetName() << " health now " << opp->GetHealth() << "\n";
+
+			return out.str();
+		}
 };
 
 /*
@@ -96,7 +106,7 @@ class MinionCard : public Card, public Living
 class SpellCard : public Card
 {
 	public:
-		SpellCard(std::string type, int att) : Card(type), m_Attack(att) {}
+		SpellCard(std::string type, int att, int heal = 0) : Card(type), m_Attack(att), m_Heal(heal) {}
 
 		virtual std::string OnActivate(CardPtr card, std::shared_ptr<Player> self, std::shared_ptr<Player> opp)
 		{
@@ -106,7 +116,7 @@ class SpellCard : public Card
 		}
 
 	protected:
-		int m_Attack;
+		int m_Attack, m_Heal;
 };
 
 class EquipmentCard : public Card

@@ -12,6 +12,7 @@ typedef std::shared_ptr<Card> CardPtr;
 class Living {
 	public:
 		Living(std::string type, int health) : m_Name(type), m_Health(health) {}
+		virtual ~Living() {}
 
 		std::string GetName() { return m_Name; }
 		int GetHealth() { return m_Health; }
@@ -26,6 +27,7 @@ class Player : public Living
 {
 	public:
 		Player(std::string name, int maxHealth);
+		virtual ~Player() {}
 
 		void AddCardToDeck(CardPtr card);
 		void RemoveCardFromTable(CardPtr card);
