@@ -78,10 +78,7 @@ class MinionCard : public Card, public Living
 		{
 			std::ostringstream out;
 
-			CardPtr card = nullptr;
-
-			if(opp->GetTable().size() > 0)
-				card = opp->GetTable()[Random(opp->GetTable().size())];
+			CardPtr card = opp->GetEnemy();
 
 			if (m_Attack > 0) {
 				std::shared_ptr<Living> c;

@@ -47,3 +47,12 @@ CardPtr Player::PlayCard()
 
 	return card;
 }
+
+CardPtr Player::GetEnemy()
+{
+	for (auto c : m_Table)
+		if (c->GetType() == "Wall")
+			return c;
+
+	return (m_Table.size() > 0) ? m_Table[Random(m_Table.size())] : nullptr;
+}

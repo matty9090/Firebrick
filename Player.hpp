@@ -34,6 +34,7 @@ class Player : public Living
 
 		CardPtr DrawCard();
 		CardPtr PlayCard();
+		CardPtr GetEnemy();
 
 		std::queue<CardPtr>  GetDeck() const { return m_Deck; }
 		std::vector<CardPtr> GetHand() const { return m_Hand; }
