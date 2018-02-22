@@ -84,7 +84,12 @@ void Game::Play(EPlayers player) {
 	/* Minions on table attack other players minions */
 
 	for (auto card : m_Players[player]->GetTable())
+	{
 		cout << card->OnPlay(card, m_Players[player], m_Players[oPlayer]);
+
+		if (m_Players[oPlayer]->GetHealth() <= 0)
+			break;
+	}
 
 	cout << "\n";
 
