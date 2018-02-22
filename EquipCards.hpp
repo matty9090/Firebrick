@@ -13,6 +13,7 @@ class SwordEquip : public EquipmentCard
 
 		virtual std::string OnActivate(CardPtr card, std::shared_ptr<Player> self, std::shared_ptr<Player> opp)
 		{
+			std::ostringstream out;
 			EquipmentCard::OnActivate(card, self, opp);
 			std::vector<std::shared_ptr<MinionCard>> cards;
 
@@ -21,11 +22,15 @@ class SwordEquip : public EquipmentCard
 					cards.push_back(std::dynamic_pointer_cast<MinionCard>(c));
 
 			if (cards.size() > 0)
-				cards[Random(cards.size())]->IncreaseAttack(m_AttIncrement);
+			{
+				int rand = Random(cards.size());
+				cards[rand]->IncreaseAttack(m_AttIncrement);
+				out << cards[rand]->GetType() << "(" << cards[rand]->GetHealth() << " equipped with " << GetType() << "\n";
+			}
 			else
 				self->TakeDamage(-m_AttIncrement);
 
-			return "";
+			return out.str();
 		}
 
 	private:
@@ -39,6 +44,7 @@ class ArmourEquip : public EquipmentCard
 
 		virtual std::string OnActivate(CardPtr card, std::shared_ptr<Player> self, std::shared_ptr<Player> opp)
 		{
+			std::ostringstream out;
 			EquipmentCard::OnActivate(card, self, opp);
 			std::vector<std::shared_ptr<MinionCard>> cards;
 
@@ -47,9 +53,13 @@ class ArmourEquip : public EquipmentCard
 					cards.push_back(std::dynamic_pointer_cast<MinionCard>(c));
 
 			if (cards.size() > 0)
-				cards[Random(cards.size())]->AddArmour(m_Protection);
+			{
+				int rand = Random(cards.size());
+				cards[rand]->AddArmour(m_Protection);
+				out << cards[rand]->GetType() << "(" << cards[rand]->GetHealth() << ") equipped with " << GetType() << "\n";
+			}
 
-			return "";
+			return out.str();
 		}
 
 	private:

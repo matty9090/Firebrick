@@ -99,7 +99,10 @@ class LeechMinionCard : public MinionCard
 			out << res;
 
 			if (res != "")
+			{
 				self->TakeDamage(-m_Heal);
+				out << "Leech heals " << self->GetName() << ": " << self->GetName() << " health now " << self->GetHealth();
+			}
 
 			return out.str();
 		}
