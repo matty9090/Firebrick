@@ -6,20 +6,20 @@
 	Equipment Cards
 */
 
-class SwordEquip : public EquipmentCard
+class CSwordEquip : public CEquipmentCard
 {
 	public:
-		SwordEquip(std::string type, int attIncrement) : EquipmentCard(type), m_AttIncrement(attIncrement) {}
+		CSwordEquip(std::string type, int attIncrement) : CEquipmentCard(type), m_AttIncrement(attIncrement) {}
 
-		virtual std::string OnActivate(CardPtr card, std::shared_ptr<Player> self, std::shared_ptr<Player> opp)
+		virtual std::string OnActivate(CardPtr card, std::shared_ptr<CPlayer> self, std::shared_ptr<CPlayer> opp)
 		{
 			std::ostringstream out;
-			EquipmentCard::OnActivate(card, self, opp);
-			std::vector<std::shared_ptr<MinionCard>> cards;
+			CEquipmentCard::OnActivate(card, self, opp);
+			std::vector<std::shared_ptr<CMinionCard>> cards;
 
 			for (auto c : self->GetTable())
-				if (std::dynamic_pointer_cast<MinionCard>(c))
-					cards.push_back(std::dynamic_pointer_cast<MinionCard>(c));
+				if (std::dynamic_pointer_cast<CMinionCard>(c))
+					cards.push_back(std::dynamic_pointer_cast<CMinionCard>(c));
 
 			if (cards.size() > 0)
 			{
@@ -37,20 +37,20 @@ class SwordEquip : public EquipmentCard
 		int m_AttIncrement;
 };
 
-class ArmourEquip : public EquipmentCard
+class CArmourEquip : public CEquipmentCard
 {
 	public:
-		ArmourEquip(std::string type, int protection) : EquipmentCard(type), m_Protection(protection) {}
+		CArmourEquip(std::string type, int protection) : CEquipmentCard(type), m_Protection(protection) {}
 
-		virtual std::string OnActivate(CardPtr card, std::shared_ptr<Player> self, std::shared_ptr<Player> opp)
+		virtual std::string OnActivate(CardPtr card, std::shared_ptr<CPlayer> self, std::shared_ptr<CPlayer> opp)
 		{
 			std::ostringstream out;
-			EquipmentCard::OnActivate(card, self, opp);
-			std::vector<std::shared_ptr<MinionCard>> cards;
+			CEquipmentCard::OnActivate(card, self, opp);
+			std::vector<std::shared_ptr<CMinionCard>> cards;
 
 			for (auto c : self->GetTable())
-				if (std::dynamic_pointer_cast<MinionCard>(c))
-					cards.push_back(std::dynamic_pointer_cast<MinionCard>(c));
+				if (std::dynamic_pointer_cast<CMinionCard>(c))
+					cards.push_back(std::dynamic_pointer_cast<CMinionCard>(c));
 
 			if (cards.size() > 0)
 			{

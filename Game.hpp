@@ -8,11 +8,11 @@
 #include "Util.hpp"
 #include "Player.hpp"
 
-class Game
+class CGame
 {
 	public:
-		Game(std::string wizFile, std::string sorFile);
-		~Game();
+		CGame(std::string wizFile, std::string sorFile);
+		~CGame();
 
 		void Run();
 
@@ -23,13 +23,13 @@ class Game
 		const int m_kMaxRounds = 30;
 		const int m_kMaxHealth = 30;
 
-		std::shared_ptr<Player> *m_Players;
+		std::shared_ptr<CPlayer> *m_Players;
 
 		enum EPlayers { S, W };
 		std::map<std::string, int> m_MinionCards;
 
 		void Play(EPlayers player);
-		void ReadDeck(std::string file, std::shared_ptr<Player> player);
+		void ReadDeck(std::string file, std::shared_ptr<CPlayer> player);
 		std::string OutputTable(std::vector<CardPtr> table);
 		CardPtr CreateCard(int type, std::string name, std::vector<int> values);
 };

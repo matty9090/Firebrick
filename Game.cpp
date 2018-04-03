@@ -14,11 +14,11 @@ using namespace std;
 /*
 	Initialise game data
 */
-Game::Game(std::string wizFile, std::string sorFile) : m_Round(1), ended(false)
+CGame::CGame(std::string wizFile, std::string sorFile) : m_Round(1), ended(false)
 {
-	m_Players	 = new shared_ptr<Player>[2];
-	m_Players[0] = make_shared<Player>("Sorceress", m_kMaxHealth);
-	m_Players[1] = make_shared<Player>("Wizard", m_kMaxHealth);
+	m_Players	 = new shared_ptr<CPlayer>[2];
+	m_Players[0] = make_shared<CPlayer>("Sorceress", m_kMaxHealth);
+	m_Players[1] = make_shared<CPlayer>("Wizard", m_kMaxHealth);
 
 	try
 	{
@@ -35,7 +35,7 @@ Game::Game(std::string wizFile, std::string sorFile) : m_Round(1), ended(false)
 /*
 	Game loop
 */
-void Game::Run()
+void CGame::Run()
 {
 	cout << "Sorceress begins with " << m_Players[S]->DrawCard()->GetType() << "\n";
 	cout << "Wizard begins with "    << m_Players[W]->DrawCard()->GetType() << "\n";
@@ -60,7 +60,7 @@ void Game::Run()
 /*
 	Each players turn
 */
-void Game::Play(EPlayers player) {
+void CGame::Play(EPlayers player) {
 	string playerStr = (player == S) ? "Sorceress" : "Wizard";
 	EPlayers oPlayer = (player == S) ? W : S;
 
@@ -113,7 +113,7 @@ void Game::Play(EPlayers player) {
 /*
 	Read the deck from a file
 */
-void Game::ReadDeck(string file, std::shared_ptr<Player> player)
+void CGame::ReadDeck(string file, std::shared_ptr<CPlayer> player)
 {
 	ifstream f(file);
 
@@ -150,7 +150,7 @@ void Game::ReadDeck(string file, std::shared_ptr<Player> player)
 	}
 }
 
-string Game::OutputTable(std::vector<CardPtr> table)
+string CGame::OutputTable(std::vector<CardPtr> table)
 {
 	ostringstream str;
 
@@ -158,8 +158,8 @@ string Game::OutputTable(std::vector<CardPtr> table)
 	{
 		for (auto card : table)
 		{
-			if (dynamic_pointer_cast<MinionCard>(card))
-				str << card->GetType() << "(" << dynamic_pointer_cast<MinionCard>(card)->GetHealth() << ") ";
+			if (dynamic_pointer_cast<CMinionCard>(card))
+				str << card->GetType() << "(" << dynamic_pointer_cast<CMinionCard>(card)->GetHealth() << ") ";
 		}
 	}
 	else
@@ -170,21 +170,21 @@ string Game::OutputTable(std::vector<CardPtr> table)
 	return str.str();
 }
 
-CardPtr Game::CreateCard(int type, string name, vector<int> v)
+CardPtr CGame::CreateCard(int type, string name, vector<int> v)
 {
 	switch (type)
 	{
-		case 1:  return make_shared<BasicMinionCard>   (name, v[0], v[1]);
-		case 2:  return make_shared<FireballSpell>     (name, v[0]);
-		case 3:  return make_shared<LightningSpell>    (name, v[0]);
-		case 4:  return make_shared<BlessSpell>        (name, v[0], v[1]);
-		case 5:  return make_shared<VampireMinionCard> (name, v[0], v[1], v[2]);
-		case 6:  return make_shared<WallMinionCard>    (name, v[0], v[1]);
-		case 7:  return make_shared<HordeMinionCard>   (name, v[0], v[1],    1);
-		case 8:  return make_shared<TrampleMinionCard> (name, v[0], v[1]);
-		case 9:  return make_shared<LeechMinionCard>   (name, v[0], v[1],    2);
-		case 10: return make_shared<SwordEquip>        (name, v[0]);
-		case 11: return make_shared<ArmourEquip>       (name, v[0]);
+		case 1:  return make_shared<CBasicMinionCard>   (name, v[0], v[1]);
+		case 2:  return make_shared<CFireballSpell>     (name, v[0]);
+		case 3:  return make_shared<CLightningSpell>    (name, v[0]);
+		case 4:  return make_shared<CBlessSpell>        (name, v[0], v[1]);
+		case 5:  return make_shared<CVampireMinionCard> (name, v[0], v[1], v[2]);
+		case 6:  return make_shared<CWallMinionCard>    (name, v[0], v[1]);
+		case 7:  return make_shared<CHordeMinionCard>   (name, v[0], v[1],    1);
+		case 8:  return make_shared<CTrampleMinionCard> (name, v[0], v[1]);
+		case 9:  return make_shared<CLeechMinionCard>   (name, v[0], v[1],    2);
+		case 10: return make_shared<CSwordEquip>        (name, v[0]);
+		case 11: return make_shared<CArmourEquip>       (name, v[0]);
 	}
 
 	throw exception("Invalid card type");
@@ -195,6 +195,6 @@ CardPtr Game::CreateCard(int type, string name, vector<int> v)
 /*
 	Free memory
 */
-Game::~Game() {
+CGame::~CGame() {
 	delete[] m_Players;
 }

@@ -6,22 +6,22 @@
 	Spell cards
 */
 
-class FireballSpell : public SpellCard
+class CFireballSpell : public CSpellCard
 {
 	public:
-		FireballSpell(std::string type, int att) : SpellCard(type, att) {}
+		CFireballSpell(std::string type, int att) : CSpellCard(type, att) {}
 
-		virtual std::string OnActivate(CardPtr card, std::shared_ptr<Player> self, std::shared_ptr<Player> opp)
+		virtual std::string OnActivate(CardPtr card, std::shared_ptr<CPlayer> self, std::shared_ptr<CPlayer> opp)
 		{
 			std::ostringstream out;
-			SpellCard::OnActivate(card, self, opp);
+			CSpellCard::OnActivate(card, self, opp);
 
-			std::vector<std::shared_ptr<Living>> targets;
+			std::vector<std::shared_ptr<CLiving>> targets;
 
 			for (auto tblCard : opp->GetTable())
-				targets.push_back(std::dynamic_pointer_cast<Living>(tblCard));
+				targets.push_back(std::dynamic_pointer_cast<CLiving>(tblCard));
 
-			targets.push_back(std::dynamic_pointer_cast<Living>(opp));
+			targets.push_back(std::dynamic_pointer_cast<CLiving>(opp));
 
 			if (targets.size() > 0)
 			{
@@ -34,57 +34,57 @@ class FireballSpell : public SpellCard
 		}
 };
 
-class LightningSpell : public SpellCard
+class CLightningSpell : public CSpellCard
 {
 	public:
-		LightningSpell(std::string type, int att) : SpellCard(type, att) {}
+		CLightningSpell(std::string type, int att) : CSpellCard(type, att) {}
 
-		virtual std::string OnActivate(CardPtr card, std::shared_ptr<Player> self, std::shared_ptr<Player> opp)
+		virtual std::string OnActivate(CardPtr card, std::shared_ptr<CPlayer> self, std::shared_ptr<CPlayer> opp)
 		{
 			std::ostringstream out;
-			SpellCard::OnActivate(card, self, opp);
+			CSpellCard::OnActivate(card, self, opp);
 
 			for (auto c : opp->GetTable())
-				out << Attack(card, std::dynamic_pointer_cast<Living>(c), opp, m_Attack, c);
+				out << Attack(card, std::dynamic_pointer_cast<CLiving>(c), opp, m_Attack, c);
 
-			out << Attack(card, std::dynamic_pointer_cast<Living>(opp), opp, m_Attack, nullptr);
+			out << Attack(card, std::dynamic_pointer_cast<CLiving>(opp), opp, m_Attack, nullptr);
 
 			return out.str();
 		}
 };
 
-class BlessSpell : public SpellCard
+class CBlessSpell : public CSpellCard
 {
 	public:
-		BlessSpell(std::string type, int att, int heal) : SpellCard(type, att, heal) {}
+		CBlessSpell(std::string type, int att, int heal) : CSpellCard(type, att, heal) {}
 
-		virtual std::string OnActivate(CardPtr card, std::shared_ptr<Player> self, std::shared_ptr<Player> opp)
+		virtual std::string OnActivate(CardPtr card, std::shared_ptr<CPlayer> self, std::shared_ptr<CPlayer> opp)
 		{
 			std::ostringstream out;
-			SpellCard::OnActivate(card, self, opp);
+			CSpellCard::OnActivate(card, self, opp);
 
-			std::vector<std::shared_ptr<Living>> targets;
+			std::vector<std::shared_ptr<CLiving>> targets;
 
 			// Enemy minions, enemy player, friendly minions, friendly player
-			for (auto minions : opp->GetTable())  targets.push_back(std::dynamic_pointer_cast<Living>(minions));
-			targets.push_back(std::dynamic_pointer_cast<Living>(opp));
-			for (auto minions : self->GetTable()) targets.push_back(std::dynamic_pointer_cast<Living>(minions));
-			targets.push_back(std::dynamic_pointer_cast<Living>(self));
+			for (auto minions : opp->GetTable())  targets.push_back(std::dynamic_pointer_cast<CLiving>(minions));
+			targets.push_back(std::dynamic_pointer_cast<CLiving>(opp));
+			for (auto minions : self->GetTable()) targets.push_back(std::dynamic_pointer_cast<CLiving>(minions));
+			targets.push_back(std::dynamic_pointer_cast<CLiving>(self));
 
 			if (targets.size() > 0)
 			{
 				int rand = Random(targets.size());
 				CardPtr c = nullptr;
 
-				if (std::dynamic_pointer_cast<Player>(targets[rand]) == self)
+				if (std::dynamic_pointer_cast<CPlayer>(targets[rand]) == self)
 				{
-					CardPtr isPlayer = std::dynamic_pointer_cast<Card>(targets[rand]);
+					CardPtr isPlayer = std::dynamic_pointer_cast<CCard>(targets[rand]);
 					c = (isPlayer) ? nullptr : isPlayer;
 					out << Attack(card, targets[rand], opp, m_Attack, c);
 				}
 				else
 				{
-					CardPtr isPlayer = std::dynamic_pointer_cast<Card>(targets[rand]);
+					CardPtr isPlayer = std::dynamic_pointer_cast<CCard>(targets[rand]);
 					c = (isPlayer) ? nullptr : isPlayer;
 					out << Heal(card, targets[rand], opp, m_Heal, c);
 				}

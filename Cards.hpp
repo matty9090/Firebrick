@@ -7,23 +7,23 @@
 
 #include "Player.hpp"
 
-class Card;
-class MinionCard;
+class CCard;
+class CMinionCard;
 
 // Create type for ease of use
-typedef std::shared_ptr<Card> CardPtr;
+typedef std::shared_ptr<CCard> CardPtr;
 
 /*
 	General class card
 */
 
-class Card
+class CCard
 {
 	public:
-		Card(std::string type) : m_CardType(type) {}
+		CCard(std::string type) : m_CardType(type) {}
 		 
-		virtual std::string OnPlay(CardPtr card, std::shared_ptr<Player> self, std::shared_ptr<Player> opp) { return ""; } // TODO: Make pure
-		virtual std::string OnActivate(CardPtr card, std::shared_ptr<Player> self, std::shared_ptr<Player> opp) { return ""; }
+		virtual std::string OnPlay(CardPtr card, std::shared_ptr<CPlayer> self, std::shared_ptr<CPlayer> opp) { return ""; } // TODO: Make pure
+		virtual std::string OnActivate(CardPtr card, std::shared_ptr<CPlayer> self, std::shared_ptr<CPlayer> opp) { return ""; }
 
 		std::string GetType() { return m_CardType; }
 
@@ -31,7 +31,7 @@ class Card
 		std::string m_CardType;
 		int m_Excess;
 		
-		std::string Attack(CardPtr att, std::shared_ptr<Living> opp, std::shared_ptr<Player> player, int damage, CardPtr remove = nullptr)
+		std::string Attack(CardPtr att, std::shared_ptr<CLiving> opp, std::shared_ptr<CPlayer> player, int damage, CardPtr remove = nullptr)
 		{
 			std::ostringstream out;
 
@@ -60,7 +60,7 @@ class Card
 			return out.str();
 		}
 
-		std::string Heal(CardPtr att, std::shared_ptr<Living> opp, std::shared_ptr<Player> player, int heal, CardPtr remove = nullptr)
+		std::string Heal(CardPtr att, std::shared_ptr<CLiving> opp, std::shared_ptr<CPlayer> player, int heal, CardPtr remove = nullptr)
 		{
 			std::ostringstream out;
 
@@ -75,29 +75,29 @@ class Card
 	The 3 types of card
 */
 
-class MinionCard : public Card, public Living
+class CMinionCard : public CCard, public CLiving
 {
 	public:
-		MinionCard(std::string type, int att, int health) : Card(type), Living(type, health), m_Attack(att) {}
+		CMinionCard(std::string type, int att, int health) : CCard(type), CLiving(type, health), m_Attack(att) {}
 
 		void IncreaseAttack(int att) { m_Attack += att; }
 		void TakeDamage(int damage) { m_Health -= damage; }
 
-		std::string OnPlay(CardPtr curCard, std::shared_ptr<Player> self, std::shared_ptr<Player> opp)
+		std::string OnPlay(CardPtr curCard, std::shared_ptr<CPlayer> self, std::shared_ptr<CPlayer> opp)
 		{
 			std::ostringstream out;
 
 			CardPtr card = opp->GetEnemy();
 
 			if (m_Attack > 0) {
-				std::shared_ptr<Living> c;
+				std::shared_ptr<CLiving> c;
 
 				if (card == nullptr)
-					c = std::dynamic_pointer_cast<Living>(opp);
-				else if (!std::dynamic_pointer_cast<Living>(card))
+					c = std::dynamic_pointer_cast<CLiving>(opp);
+				else if (!std::dynamic_pointer_cast<CLiving>(card))
 					return "";
 				else
-					c = std::dynamic_pointer_cast<Living>(card);
+					c = std::dynamic_pointer_cast<CLiving>(card);
 
 				out << Attack(curCard, c, opp, m_Attack, card);
 			}
@@ -109,12 +109,12 @@ class MinionCard : public Card, public Living
 		int m_Attack;
 };
 
-class SpellCard : public Card
+class CSpellCard : public CCard
 {
 	public:
-		SpellCard(std::string type, int att, int heal = 0) : Card(type), m_Attack(att), m_Heal(heal) {}
+		CSpellCard(std::string type, int att, int heal = 0) : CCard(type), m_Attack(att), m_Heal(heal) {}
 
-		virtual std::string OnActivate(CardPtr card, std::shared_ptr<Player> self, std::shared_ptr<Player> opp)
+		virtual std::string OnActivate(CardPtr card, std::shared_ptr<CPlayer> self, std::shared_ptr<CPlayer> opp)
 		{
 			self->RemoveCardFromTable(card);
 			
@@ -125,12 +125,12 @@ class SpellCard : public Card
 		int m_Attack, m_Heal;
 };
 
-class EquipmentCard : public Card
+class CEquipmentCard : public CCard
 {
 	public:
-		EquipmentCard(std::string type) : Card(type) {}
+		CEquipmentCard(std::string type) : CCard(type) {}
 
-		virtual std::string OnActivate(CardPtr card, std::shared_ptr<Player> self, std::shared_ptr<Player> opp)
+		virtual std::string OnActivate(CardPtr card, std::shared_ptr<CPlayer> self, std::shared_ptr<CPlayer> opp)
 		{
 			self->RemoveCardFromTable(card);
 

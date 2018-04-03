@@ -4,17 +4,17 @@
 
 using namespace std;
 
-Player::Player(std::string name, int maxHealth) : Living(name, maxHealth)
+CPlayer::CPlayer(std::string name, int maxHealth) : CLiving(name, maxHealth)
 {
 
 }
 
-void Player::AddCardToDeck(CardPtr card)
+void CPlayer::AddCardToDeck(CardPtr card)
 {
 	m_Deck.push(card);
 }
 
-void Player::RemoveCardFromTable(CardPtr card)
+void CPlayer::RemoveCardFromTable(CardPtr card)
 {
 	for (size_t i = 0; i < m_Table.size(); ++i)
 	{
@@ -23,7 +23,7 @@ void Player::RemoveCardFromTable(CardPtr card)
 	}
 }
 
-CardPtr Player::DrawCard()
+CardPtr CPlayer::DrawCard()
 {
 	CardPtr card = nullptr;
 
@@ -37,7 +37,7 @@ CardPtr Player::DrawCard()
 	return card;
 }
 
-CardPtr Player::PlayCard()
+CardPtr CPlayer::PlayCard()
 {
 	int n = Random(m_Hand.size());
 	CardPtr card = m_Hand[n];
@@ -48,7 +48,7 @@ CardPtr Player::PlayCard()
 	return card;
 }
 
-CardPtr Player::GetEnemy()
+CardPtr CPlayer::GetEnemy()
 {
 	for (auto c : m_Table)
 		if (c->GetType() == "Wall")

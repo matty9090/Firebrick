@@ -6,13 +6,14 @@
 #include <memory>
 #include <vector>
 
-class Card;
-typedef std::shared_ptr<Card> CardPtr;
+class CCard;
+typedef std::shared_ptr<CCard> CardPtr;
 
-class Living {
+class CLiving
+{
 	public:
-		Living(std::string type, int health) : m_Name(type), m_Health(health), m_Armour(0) {}
-		virtual ~Living() {}
+		CLiving(std::string type, int health) : m_Name(type), m_Health(health), m_Armour(0) {}
+		virtual ~CLiving() {}
 
 		std::string GetName() { return m_Name; }
 
@@ -27,11 +28,11 @@ class Living {
 		std::string m_Name;
 };
 
-class Player : public Living
+class CPlayer : public CLiving
 {
 	public:
-		Player(std::string name, int maxHealth);
-		virtual ~Player() {}
+		CPlayer(std::string name, int maxHealth);
+		virtual ~CPlayer() {}
 
 		void AddCardToDeck(CardPtr card);
 		void RemoveCardFromTable(CardPtr card);

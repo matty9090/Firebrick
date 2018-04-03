@@ -6,21 +6,21 @@
 	Minion Cards
 */
 
-class BasicMinionCard : public MinionCard
+class CBasicMinionCard : public CMinionCard
 {
 	public:
-		BasicMinionCard(std::string type, int att, int health) : MinionCard(type, att, health) {}
+		CBasicMinionCard(std::string type, int att, int health) : CMinionCard(type, att, health) {}
 };
 
-class VampireMinionCard : public MinionCard
+class CVampireMinionCard : public CMinionCard
 {
 	public:
-		VampireMinionCard(std::string type, int att, int health, int heal) : MinionCard(type, att, health), m_Heal(heal) {}
+		CVampireMinionCard(std::string type, int att, int health, int heal) : CMinionCard(type, att, health), m_Heal(heal) {}
 
-		std::string OnPlay(CardPtr card, std::shared_ptr<Player> self, std::shared_ptr<Player> opp)
+		std::string OnPlay(CardPtr card, std::shared_ptr<CPlayer> self, std::shared_ptr<CPlayer> opp)
 		{
 			std::ostringstream out;
-			std::string res = MinionCard::OnPlay(card, self, opp);
+			std::string res = CMinionCard::OnPlay(card, self, opp);
 			out << res;
 			
 			if (res != "")
@@ -34,18 +34,18 @@ class VampireMinionCard : public MinionCard
 };
 
 /* Unused? */
-class WallMinionCard : public MinionCard
+class CWallMinionCard : public CMinionCard
 {
 	public:
-		WallMinionCard(std::string type, int att, int health) : MinionCard(type, att, health) {}
+		CWallMinionCard(std::string type, int att, int health) : CMinionCard(type, att, health) {}
 };
 
-class HordeMinionCard : public MinionCard
+class CHordeMinionCard : public CMinionCard
 {
 	public:
-		HordeMinionCard(std::string type, int att, int health, int attIncrement) : MinionCard(type, att, health), m_InitialAtt(att), m_AttIncrement(attIncrement) {}
+		CHordeMinionCard(std::string type, int att, int health, int attIncrement) : CMinionCard(type, att, health), m_InitialAtt(att), m_AttIncrement(attIncrement) {}
 
-		std::string OnPlay(CardPtr card, std::shared_ptr<Player> self, std::shared_ptr<Player> opp)
+		std::string OnPlay(CardPtr card, std::shared_ptr<CPlayer> self, std::shared_ptr<CPlayer> opp)
 		{
 			int extra = 0;
 
@@ -55,7 +55,7 @@ class HordeMinionCard : public MinionCard
 
 			m_Attack = m_InitialAtt + extra;
 
-			return MinionCard::OnPlay(card, self, opp);
+			return CMinionCard::OnPlay(card, self, opp);
 		}
 
 	private:
@@ -63,19 +63,19 @@ class HordeMinionCard : public MinionCard
 		int m_InitialAtt;
 };
 
-class TrampleMinionCard : public MinionCard
+class CTrampleMinionCard : public CMinionCard
 {
 	public:
-		TrampleMinionCard(std::string type, int att, int health) : MinionCard(type, att, health), m_InitialAtt(att) {}
+		CTrampleMinionCard(std::string type, int att, int health) : CMinionCard(type, att, health), m_InitialAtt(att) {}
 
-		std::string OnPlay(CardPtr card, std::shared_ptr<Player> self, std::shared_ptr<Player> opp)
+		std::string OnPlay(CardPtr card, std::shared_ptr<CPlayer> self, std::shared_ptr<CPlayer> opp)
 		{
 			std::ostringstream out;
 			m_Attack = m_InitialAtt;
 
 			do
 			{
-				out << MinionCard::OnPlay(card, self, opp);
+				out << CMinionCard::OnPlay(card, self, opp);
 				m_Attack = m_Excess;
 			}
 			while (m_Excess > 0);
@@ -87,15 +87,15 @@ class TrampleMinionCard : public MinionCard
 		int m_InitialAtt;
 };
 
-class LeechMinionCard : public MinionCard
+class CLeechMinionCard : public CMinionCard
 {
 	public:
-		LeechMinionCard(std::string type, int att, int health, int heal) : MinionCard(type, att, health), m_Heal(heal) {}
+		CLeechMinionCard(std::string type, int att, int health, int heal) : CMinionCard(type, att, health), m_Heal(heal) {}
 
-		std::string OnPlay(CardPtr card, std::shared_ptr<Player> self, std::shared_ptr<Player> opp)
+		std::string OnPlay(CardPtr card, std::shared_ptr<CPlayer> self, std::shared_ptr<CPlayer> opp)
 		{
 			std::ostringstream out;
-			std::string res = MinionCard::OnPlay(card, self, opp);
+			std::string res = CMinionCard::OnPlay(card, self, opp);
 			out << res;
 
 			if (res != "")

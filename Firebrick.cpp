@@ -26,7 +26,7 @@ int main()
 
 	cout << "Matthew Lowe - Firebrick\n\n";
 
-	Game firebrick(g_WizardDeck, g_SorceressDeck);
+	CGame firebrick(g_WizardDeck, g_SorceressDeck);
 	firebrick.Run();
 
     return 0;
