@@ -2,9 +2,9 @@
 
 #include <string>
 #include <vector>
-#include <queue>
 #include <memory>
 #include <vector>
+#include <deque>
 
 // Predeclare the abstract card class
 class CCard;
@@ -45,6 +45,7 @@ class CPlayer : public CLiving
 		CPlayer(std::string name, int maxHealth);
 		virtual ~CPlayer() {}
 
+		void ShuffleDeck();
 		void AddCardToDeck(CardPtr card);
 		void RemoveCardFromTable(CardPtr card);
 
@@ -52,11 +53,11 @@ class CPlayer : public CLiving
 		CardPtr PlayCard();
 		CardPtr GetEnemy();
 
-		std::queue<CardPtr>  GetDeck() const { return m_Deck; }
+		std::deque<CardPtr>  GetDeck() const { return m_Deck; }
 		std::vector<CardPtr> GetHand() const { return m_Hand; }
 		std::vector<CardPtr> GetTable() const { return m_Table; }
 
 	private:
-		std::queue<CardPtr> m_Deck;
+		std::deque<CardPtr> m_Deck;
 		std::vector<CardPtr> m_Hand, m_Table;
 };

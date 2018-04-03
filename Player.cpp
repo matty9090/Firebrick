@@ -2,6 +2,8 @@
 #include "Util.hpp"
 #include "Cards.hpp"
 
+#include <algorithm>
+
 using namespace std;
 
 /*
@@ -13,11 +15,19 @@ CPlayer::CPlayer(std::string name, int maxHealth) : CLiving(name, maxHealth)
 }
 
 /*
+	Shuffle the deck
+*/
+void CPlayer::ShuffleDeck()
+{
+	random_shuffle(m_Deck.begin(), m_Deck.end());
+}
+
+/*
 	Add card to deck (used when loading in cards from file)
 */
 void CPlayer::AddCardToDeck(CardPtr card)
 {
-	m_Deck.push(card);
+	m_Deck.push_back(card);
 }
 
 /*
@@ -43,7 +53,7 @@ CardPtr CPlayer::DrawCard()
 	{
 		card = m_Deck.front();
 		m_Hand.push_back(card);
-		m_Deck.pop();
+		m_Deck.pop_front();
 	}
 
 	return card;

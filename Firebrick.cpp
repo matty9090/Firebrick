@@ -13,6 +13,7 @@ using namespace std;
 */
 int main()
 {
+	// Declare files
 	const string g_SeedFile = "seed.txt";
 	const string g_WizardDeck = "wizard.txt";
 	const string g_SorceressDeck = "sorceress.txt";
@@ -20,6 +21,7 @@ int main()
 	int seed;
 	ifstream seedFile(g_SeedFile);
 
+	// Read in seed
 	if (seedFile.is_open())
 	{
 		seedFile >> seed;
@@ -29,6 +31,7 @@ int main()
 
 	cout << "Matthew Lowe - Firebrick\n\n";
 
+	// Create game class and run
 	CGame firebrick(g_WizardDeck, g_SorceressDeck);
 	firebrick.Run();
 

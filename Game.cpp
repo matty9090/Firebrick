@@ -37,6 +37,18 @@ CGame::CGame(std::string wizFile, std::string sorFile) : m_Round(1), ended(false
 */
 void CGame::Run()
 {
+	cout << "Do you want to shuffle the deck? (y/n) ";
+	char c = getchar();
+
+	if (c == 'y') {
+		m_Players[S]->ShuffleDeck();
+		m_Players[W]->ShuffleDeck();
+
+		cout << "Decks shuffled\n";
+	}
+
+	cout << "\n";
+
 	cout << "Sorceress begins with " << m_Players[S]->DrawCard()->GetType() << "\n";
 	cout << "Wizard begins with "    << m_Players[W]->DrawCard()->GetType() << "\n";
 
