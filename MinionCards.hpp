@@ -6,6 +6,7 @@
 	Minion Cards
 */
 
+// No special abilities so will use standard CMinionCard's attack function
 class CBasicMinionCard : public CMinionCard
 {
 	public:
@@ -17,22 +18,13 @@ class CVampireMinionCard : public CMinionCard
 	public:
 		CVampireMinionCard(std::string type, int att, int health, int heal) : CMinionCard(type, att, health), m_Heal(heal) {}
 
-		std::string OnPlay(CardPtr card, std::shared_ptr<CPlayer> self, std::shared_ptr<CPlayer> opp)
-		{
-			std::ostringstream out;
-			std::string res = CMinionCard::OnPlay(card, self, opp);
-			out << res;
-			
-			if (res != "")
-				m_Health += m_Heal;
-
-			return out.str();
-		}
+		std::string OnPlay(CardPtr card, std::shared_ptr<CPlayer> self, std::shared_ptr<CPlayer> opp);
 
 	private:
 		int m_Heal;
 };
 
+// No special abilities (however, will be picked as the first enemy)
 class CWallMinionCard : public CMinionCard
 {
 	public:
@@ -44,18 +36,7 @@ class CHordeMinionCard : public CMinionCard
 	public:
 		CHordeMinionCard(std::string type, int att, int health, int attIncrement) : CMinionCard(type, att, health), m_InitialAtt(att), m_AttIncrement(attIncrement) {}
 
-		std::string OnPlay(CardPtr card, std::shared_ptr<CPlayer> self, std::shared_ptr<CPlayer> opp)
-		{
-			int extra = 0;
-
-			for (CardPtr c : self->GetTable())
-				if (c->GetType() == GetType() && c != card)
-					extra += m_AttIncrement;
-
-			m_Attack = m_InitialAtt + extra;
-
-			return CMinionCard::OnPlay(card, self, opp);
-		}
+		std::string OnPlay(CardPtr card, std::shared_ptr<CPlayer> self, std::shared_ptr<CPlayer> opp);
 
 	private:
 		int m_AttIncrement;
@@ -67,20 +48,7 @@ class CTrampleMinionCard : public CMinionCard
 	public:
 		CTrampleMinionCard(std::string type, int att, int health) : CMinionCard(type, att, health), m_InitialAtt(att) {}
 
-		std::string OnPlay(CardPtr card, std::shared_ptr<CPlayer> self, std::shared_ptr<CPlayer> opp)
-		{
-			std::ostringstream out;
-			m_Attack = m_InitialAtt;
-
-			do
-			{
-				out << CMinionCard::OnPlay(card, self, opp);
-				m_Attack = m_Excess;
-			}
-			while (m_Excess > 0);
-
-			return out.str();
-		}
+		std::string OnPlay(CardPtr card, std::shared_ptr<CPlayer> self, std::shared_ptr<CPlayer> opp);
 
 	private:
 		int m_InitialAtt;
@@ -91,20 +59,7 @@ class CLeechMinionCard : public CMinionCard
 	public:
 		CLeechMinionCard(std::string type, int att, int health, int heal) : CMinionCard(type, att, health), m_Heal(heal) {}
 
-		std::string OnPlay(CardPtr card, std::shared_ptr<CPlayer> self, std::shared_ptr<CPlayer> opp)
-		{
-			std::ostringstream out;
-			std::string res = CMinionCard::OnPlay(card, self, opp);
-			out << res;
-
-			if (res != "")
-			{
-				self->TakeDamage(-m_Heal);
-				out << "Leech heals " << self->GetName() << ": " << self->GetName() << " health now " << self->GetHealth();
-			}
-
-			return out.str();
-		}
+		std::string OnPlay(CardPtr card, std::shared_ptr<CPlayer> self, std::shared_ptr<CPlayer> opp);
 
 	protected:
 		int m_Heal;

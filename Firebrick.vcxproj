@@ -146,9 +146,13 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Cards.cpp" />
+    <ClCompile Include="EquipCards.cpp" />
     <ClCompile Include="Firebrick.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="MinionCards.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="SpellCards.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cards.hpp" />
