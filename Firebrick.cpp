@@ -8,12 +8,15 @@
 
 using namespace std;
 
-const string g_SeedFile      = "seed.txt";
-const string g_WizardDeck    = "wizard.txt";
-const string g_SorceressDeck = "sorceress.txt";
-
+/*
+	Entry point of program
+*/
 int main()
 {
+	const string g_SeedFile = "seed.txt";
+	const string g_WizardDeck = "wizard.txt";
+	const string g_SorceressDeck = "sorceress.txt";
+
 	int seed;
 	ifstream seedFile(g_SeedFile);
 

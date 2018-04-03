@@ -150,6 +150,9 @@ void CGame::ReadDeck(string file, std::shared_ptr<CPlayer> player)
 	}
 }
 
+/*
+	Output a player's table to the console with health values
+*/
 string CGame::OutputTable(std::vector<CardPtr> table)
 {
 	ostringstream str;
@@ -158,7 +161,7 @@ string CGame::OutputTable(std::vector<CardPtr> table)
 	{
 		for (auto card : table)
 		{
-			if (dynamic_pointer_cast<CMinionCard>(card))
+			if (dynamic_pointer_cast<CMinionCard>(card)) // Check the card is a minion card
 				str << card->GetType() << "(" << dynamic_pointer_cast<CMinionCard>(card)->GetHealth() << ") ";
 		}
 	}
@@ -170,6 +173,9 @@ string CGame::OutputTable(std::vector<CardPtr> table)
 	return str.str();
 }
 
+/*
+	Factory function to create correct class instance from an integer card type
+*/
 CardPtr CGame::CreateCard(int type, string name, vector<int> v)
 {
 	switch (type)

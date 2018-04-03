@@ -6,9 +6,16 @@
 #include <memory>
 #include <vector>
 
+// Predeclare the abstract card class
 class CCard;
+
+// Create type for ease of use
 typedef std::shared_ptr<CCard> CardPtr;
 
+/*
+	Living class
+	Players and Minions share properties e.g. Health
+*/
 class CLiving
 {
 	public:
@@ -28,6 +35,10 @@ class CLiving
 		std::string m_Name;
 };
 
+/*
+	Player class
+	A player has a deck, hand and table
+*/
 class CPlayer : public CLiving
 {
 	public:

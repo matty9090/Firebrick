@@ -8,6 +8,9 @@
 #include "Util.hpp"
 #include "Player.hpp"
 
+/*
+	Game class
+*/
 class CGame
 {
 	public:

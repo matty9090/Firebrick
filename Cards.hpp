@@ -14,7 +14,7 @@ class CMinionCard;
 typedef std::shared_ptr<CCard> CardPtr;
 
 /*
-	General class card
+	General class card (abstract)
 */
 
 class CCard

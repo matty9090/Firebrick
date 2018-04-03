@@ -33,7 +33,6 @@ class CVampireMinionCard : public CMinionCard
 		int m_Heal;
 };
 
-/* Unused? */
 class CWallMinionCard : public CMinionCard
 {
 	public:

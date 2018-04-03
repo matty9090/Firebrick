@@ -4,16 +4,25 @@
 
 using namespace std;
 
+/*
+	Constructor which calls Living class to initialise members
+*/
 CPlayer::CPlayer(std::string name, int maxHealth) : CLiving(name, maxHealth)
 {
 
 }
 
+/*
+	Add card to deck (used when loading in cards from file)
+*/
 void CPlayer::AddCardToDeck(CardPtr card)
 {
 	m_Deck.push(card);
 }
 
+/*
+	Remove a card from the players table. e.g. When a minion dies
+*/
 void CPlayer::RemoveCardFromTable(CardPtr card)
 {
 	for (size_t i = 0; i < m_Table.size(); ++i)
@@ -23,6 +32,9 @@ void CPlayer::RemoveCardFromTable(CardPtr card)
 	}
 }
 
+/*
+	Draw a card off the top of the deck
+*/
 CardPtr CPlayer::DrawCard()
 {
 	CardPtr card = nullptr;
@@ -37,6 +49,9 @@ CardPtr CPlayer::DrawCard()
 	return card;
 }
 
+/*
+	Play a random card from hand onto the table
+*/
 CardPtr CPlayer::PlayCard()
 {
 	int n = Random(m_Hand.size());
@@ -48,6 +63,9 @@ CardPtr CPlayer::PlayCard()
 	return card;
 }
 
+/*
+	Get a random enemy from players table to attack (always attacks wall first)
+*/
 CardPtr CPlayer::GetEnemy()
 {
 	for (auto c : m_Table)
