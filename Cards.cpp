@@ -1,15 +1,22 @@
 #include "Cards.hpp"
 
+/*
+	Helper function to attack an enemy
+*/
 std::string CCard::Attack(CardPtr att, std::shared_ptr<CLiving> opp, std::shared_ptr<CPlayer> player, int damage, CardPtr remove)
 {
 	std::ostringstream out;
 
+	// Reduce damage if the enemy has armour
 	damage -= opp->GetProtection();
 
-	m_Excess = damage - opp->GetHealth();
+	// Damage the enemy
 	opp->TakeDamage(damage);
 
+	// Set excess damage for minions which have the horde property
 	if (opp->GetHealth() < 0)
+		m_Excess = abs(opp->GetHealth());
+	else
 		m_Excess = 0;
 
 	out << att->GetType() << " attacks " << opp->GetName() << ": " << opp->GetName();

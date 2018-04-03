@@ -40,14 +40,16 @@ std::string CHordeMinionCard::OnPlay(CardPtr card, std::shared_ptr<CPlayer> self
 std::string CTrampleMinionCard::OnPlay(CardPtr card, std::shared_ptr<CPlayer> self, std::shared_ptr<CPlayer> opp)
 {
 	std::ostringstream out;
-	m_Attack = m_InitialAtt; // Reset attack value
+	
+	// Reset attack value
+	m_Attack = m_InitialAtt;
 
 	// Set attack value to excess on every kill, keep looping until no kills / no excess damage left
 	do
 	{
 		out << CMinionCard::OnPlay(card, self, opp);
 		m_Attack = m_Excess;
-	} while (m_Excess > 0);
+	} while (m_Excess > 0 && opp->GetHealth() > 0);
 
 	return out.str();
 }

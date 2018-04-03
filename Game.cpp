@@ -102,10 +102,10 @@ void CGame::Play(EPlayers player) {
 		return;
 	}
 
-	if (m_Players[S]->GetHealth() < 0 || m_Players[W]->GetHealth() < 0)
+	if (m_Players[S]->GetHealth() <= 0 || m_Players[W]->GetHealth() <= 0)
 	{
 		ended = true;
-		cout << ((m_Players[S]->GetHealth() < 0) ? "Sorceress was killed\n" : "Wizard was killed\n");
+		cout << ((m_Players[S]->GetHealth() <= 0) ? "Sorceress was killed\n" : "Wizard was killed\n");
 		return;
 	}
 }
