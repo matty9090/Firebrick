@@ -7,10 +7,9 @@
 
 #include "Player.hpp"
 
-class CCard;
-class CMinionCard;
 
 // Create type for ease of use
+class CCard;
 typedef std::shared_ptr<CCard> CardPtr;
 
 /*
